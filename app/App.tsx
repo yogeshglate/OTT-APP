@@ -8,6 +8,7 @@ const App = () => {
       <Text>With Layered Folder Structure </Text>
       <Text>And Absolute Imports </Text>
       <Text>And App Icons For Android & iOS</Text>
+      <Text>Installed Necessary Dependencies</Text>
     </View>
   );
 };
