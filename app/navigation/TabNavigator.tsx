@@ -1,14 +1,13 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
-import { useColorScheme } from 'react-native';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Favorites, Home, Search, Settings } from 'screens';
+import { ThemeContext } from '../App';
 
 const Tab = createBottomTabNavigator();
 
 export const TabNavigator = () => {
-  const scheme = useColorScheme();
-  const isDarkMode = scheme === 'dark';
+  const { themeColors, isDarkMode } = React.useContext(ThemeContext) || {};
 
   const TabIcon = ({
     iconName,
@@ -25,11 +24,11 @@ export const TabNavigator = () => {
       screenOptions={{
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: isDarkMode ? '#121212' : '#FFFFFF',
-          borderTopColor: isDarkMode ? '#121212' : '#E0E0E0',
+          backgroundColor: themeColors?.tabBarBackground,
+          borderTopColor: themeColors?.tabBarBorderTop,
         },
-        tabBarInactiveTintColor: isDarkMode ? '#8E8E93' : '#8E8E93',
-        tabBarActiveTintColor: isDarkMode ? '#00C853' : '#00C853',
+        tabBarInactiveTintColor: themeColors?.tabBarInactive,
+        tabBarActiveTintColor: themeColors?.tabBarActive,
       }}>
       <Tab.Screen
         name="Home"

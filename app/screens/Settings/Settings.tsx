@@ -6,7 +6,8 @@ import { ThemeContext } from '../../App';
 import styles from './SettingsStyles';
 
 const Settings = () => {
-  const { themeColors } = React.useContext(ThemeContext) || {};
+  const { themeColors, isDarkMode, toggleTheme } =
+    React.useContext(ThemeContext) || {};
   const { navigation } = useNavigation();
   const { logout } = useAuth();
 
@@ -17,6 +18,12 @@ const Settings = () => {
       navigation.navigate('Landing');
     } catch {
       console.error('Error in logging out');
+    }
+  };
+
+  const handleToggleTheme = () => {
+    if (toggleTheme) {
+      toggleTheme(!isDarkMode);
     }
   };
 
@@ -58,15 +65,15 @@ const Settings = () => {
           Account
         </Text>
       </Pressable>
-      <Pressable style={styles.settingsMenu}>
+      <Pressable style={styles.settingsMenu} onPress={handleToggleTheme}>
         <MaterialCommunityIcons
-          name="play-circle"
+          name={isDarkMode ? 'weather-sunny' : 'moon-waning-crescent'}
           size={24}
           color={themeColors?.text}
           style={styles.icon}
         />
         <Text style={[styles.account, { color: themeColors?.text }]}>
-          Appearance
+          Change Appearance
         </Text>
       </Pressable>
       <Pressable style={styles.settingsMenu}>

@@ -8,6 +8,10 @@ export const colors = {
     signupLink: '#95acff',
     outlineColor: '#F3F3F3',
     inputBackground: '#1e1e1e',
+    tabBarBackground: '#121212',
+    tabBarBorderTop: '#121212',
+    tabBarInactive: '#8E8E93',
+    tabBarActive: '#00C853',
   },
   light: {
     background: '#ffffff',
@@ -18,5 +22,9 @@ export const colors = {
     signupLink: '#0066cc',
     outlineColor: '#cccccc',
     inputBackground: '#f3f3f3',
+    tabBarBackground: '#FFFFFF',
+    tabBarBorderTop: '#E0E0E0',
+    tabBarInactive: '#8E8E93',
+    tabBarActive: '#00C853',
   },
 };

@@ -1,20 +1,17 @@
 import { useFetchMovies, useNavigation } from 'hooks';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   ActivityIndicator,
   FlatList,
   Image,
   Pressable,
-  ScrollView,
-  StyleSheet,
   Text,
   TextInput,
   View,
 } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { ThemeContext } from '../../App';
-import { styles } from './SearchStyles'; // Make sure to have a styles file similar to HomeStyles
-
+import { styles } from './SearchStyles';
 const Search = () => {
   const { themeColors } = React.useContext(ThemeContext) || {};
   const { navigation } = useNavigation();
@@ -25,7 +22,7 @@ const Search = () => {
     loading: popularLoading,
     loadMore: loadMorePopular,
     hasMore: hasMorePopular,
-  } = useFetchMovies('popular'); // Fetch popular movies initially
+  } = useFetchMovies('popular');
 
   const handleNavigateToDetails = (movieId: number) => {
     navigation.navigate('Detail', { id: movieId.toString() });
@@ -33,7 +30,7 @@ const Search = () => {
 
   const renderMovieItem = ({ item }: any) => (
     <Pressable
-      style={styles.movieCard}
+      style={[styles.movieCard, { backgroundColor: themeColors?.background }]}
       onPress={() => handleNavigateToDetails(item.id)}>
       <Image
         source={{ uri: `https://image.tmdb.org/t/p/w500${item.poster_path}` }}
@@ -46,7 +43,7 @@ const Search = () => {
   );
 
   const renderCategory = (
-    title: string,
+    _title: string,
     data: any[],
     loading: boolean,
     loadMore: () => void,

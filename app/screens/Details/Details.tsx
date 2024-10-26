@@ -1,5 +1,5 @@
 import { Loader } from 'components';
-import { useFetchMovieDetails, useNavigation } from 'hooks';
+import { useFavorites, useFetchMovieDetails, useNavigation } from 'hooks';
 import React from 'react';
 import {
   Image,
@@ -10,18 +10,27 @@ import {
   View,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { MovieDetail } from 'types';
 import { ThemeContext } from '../../App';
 
 const ShowDetailScreen = () => {
   const { themeColors } = React.useContext(ThemeContext) || {};
   const { navigation, route } = useNavigation();
   const movieId = route.params?.id || '';
-  console.log(movieId);
 
-  const { movieDetails, loading, error } = useFetchMovieDetails(movieId);
+  const { movieDetails, loading } = useFetchMovieDetails(movieId);
+  const { addFavorite, removeFavorite, isFavorite } = useFavorites(); // Use the custom hook
 
   const handleGoBack = () => {
     navigation.goBack();
+  };
+
+  const handleToggleFavorite = () => {
+    if (isFavorite(movieDetails?.id)) {
+      removeFavorite(movieDetails?.id);
+    } else {
+      addFavorite(movieDetails as MovieDetail);
+    }
   };
 
   return (
@@ -35,6 +44,13 @@ const ShowDetailScreen = () => {
         <Text style={[styles.title, { color: themeColors?.text }]}>
           {movieDetails ? movieDetails.title : 'Loading...'}
         </Text>
+        <Pressable onPress={handleToggleFavorite}>
+          <Icon
+            name={isFavorite(movieDetails?.id) ? 'heart' : 'heart-outline'}
+            size={24}
+            color={themeColors?.text}
+          />
+        </Pressable>
       </View>
 
       {loading ? (

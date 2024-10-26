@@ -19,9 +19,9 @@ export default StyleSheet.create({
     marginVertical: 10,
   },
   sectionTitle: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: 'bold',
-    marginLeft: 10,
+    marginLeft: 15,
     marginBottom: 10,
   },
   card: {
