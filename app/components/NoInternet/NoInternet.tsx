@@ -1,10 +1,10 @@
+import { ThemeContext } from 'app';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { ThemeContext } from '../../App';
 
 const NoInternet = () => {
-  const { themeColors, isDarkMode } = React.useContext(ThemeContext) || {};
+  const { themeColors } = React.useContext(ThemeContext) || {};
 
   return (
     <View

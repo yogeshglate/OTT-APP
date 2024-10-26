@@ -1,13 +1,13 @@
 import { GestureResponderEvent } from 'react-native';
 import { colors } from 'styles';
 
-interface ButtonProps {
+export interface ButtonProps {
   text: string;
   onPress: (event: GestureResponderEvent) => void;
   type?: 'contained' | 'outlined';
 }
 
-type RootStackParamList = {
+export type RootStackParamList = {
   Home: undefined;
   Search: undefined;
   Favorites: undefined;
@@ -19,13 +19,13 @@ type RootStackParamList = {
   HomeTab: undefined;
 };
 
-interface User {
+export interface User {
   email: string;
   password: string;
   username: string;
 }
 
-type ThemeContextType = {
+export type ThemeContextType = {
   isDarkMode: boolean;
   themeColors: typeof colors.light;
   toggleTheme: (isDark: boolean) => void;
@@ -56,4 +56,14 @@ export interface MovieDetail {
   }[];
 }
 
-export type { ButtonProps, RootStackParamList, ThemeContextType, User };
+export type Category = {
+  title: string;
+  moviesHook: {
+    movies: Movie[];
+    loading: boolean;
+    loadMore: () => void;
+    hasMore: boolean;
+  };
+};
+
+export type ThemeColors = typeof colors.light;

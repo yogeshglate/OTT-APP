@@ -15,12 +15,9 @@ export const useFetchMovies = (category: string) => {
 
       setLoading(true);
       try {
-        const response = await axios.get(
-          `https://api.themoviedb.org/3/movie/${category}`,
-          {
-            params: { api_key: Config.API_KEY, language: 'en-US', page },
-          },
-        );
+        const response = await axios.get(`${Config.API_BASE_URL}${category}`, {
+          params: { api_key: Config.API_KEY, language: 'en-US', page },
+        });
 
         setMovies(prevMovies => {
           const existingIds = new Set(prevMovies.map(movie => movie.id));

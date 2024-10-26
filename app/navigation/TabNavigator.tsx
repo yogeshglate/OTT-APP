@@ -1,8 +1,8 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { ThemeContext } from 'app';
 import React from 'react';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Favorites, Home, Search, Settings } from 'screens';
-import { ThemeContext } from '../App';
 
 const Tab = createBottomTabNavigator();
 

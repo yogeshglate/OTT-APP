@@ -3,7 +3,7 @@
   "compilerOptions": {
     "typeRoots": ["node_modules/@types", "src/types"],
     "types": ["node"],
-    "baseUrl": "./app", // Set the base directory to the app folder
+    "baseUrl": "./app",
     "paths": {
       "assets/*": ["./app/assets/*"],
       "components": ["components/index"],
@@ -14,7 +14,9 @@
       "services": ["services/index"],
       "styles": ["styles/index"],
       "types/*": ["./app/types/index"],
-      "utils": ["utils/index"]
+      "utils": ["utils/index"],
+      "constant": ["constants/index"],
+      "app": ["App"]
     }
   },
   "include": ["app/**/*"], // Include app folder and subfolders

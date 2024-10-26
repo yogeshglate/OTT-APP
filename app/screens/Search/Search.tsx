@@ -1,3 +1,5 @@
+import { ThemeContext } from 'app';
+import { AppConstants, AppIcons } from 'constant';
 import { useFetchMovies, useNavigation } from 'hooks';
 import React, { useState } from 'react';
 import {
@@ -10,10 +12,11 @@ import {
   View,
 } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { ThemeContext } from '../../App';
-import { styles } from './SearchStyles';
-const Search = () => {
+import getStyles from './SearchStyles';
+
+const Search: React.FC = () => {
   const { themeColors } = React.useContext(ThemeContext) || {};
+  const styles = getStyles(themeColors);
   const { navigation } = useNavigation();
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -30,15 +33,13 @@ const Search = () => {
 
   const renderMovieItem = ({ item }: any) => (
     <Pressable
-      style={[styles.movieCard, { backgroundColor: themeColors?.background }]}
+      style={styles.movieCard}
       onPress={() => handleNavigateToDetails(item.id)}>
       <Image
-        source={{ uri: `https://image.tmdb.org/t/p/w500${item.poster_path}` }}
+        source={{ uri: `${AppConstants.BASE_IMAGE_PATH}${item.poster_path}` }}
         style={styles.movieImage}
       />
-      <Text style={[styles.movieTitle, { color: themeColors?.text }]}>
-        {item.title}
-      </Text>
+      <Text style={styles.movieTitle}>{item.title}</Text>
     </Pressable>
   );
 
@@ -64,7 +65,7 @@ const Search = () => {
           <ActivityIndicator
             size="large"
             color={themeColors?.text}
-            style={{ padding: 16 }}
+            style={styles.loadingIndicator}
           />
         ) : null
       }
@@ -72,27 +73,21 @@ const Search = () => {
   );
 
   return (
-    <View
-      style={[styles.container, { backgroundColor: themeColors?.background }]}>
-      <View
-        style={[styles.appBar, { backgroundColor: themeColors?.background }]}>
-        <Text style={[styles.title, { color: themeColors?.text }]}>Search</Text>
+    <View style={styles.container}>
+      <View style={styles.appBar}>
+        <Text style={styles.title}>{AppConstants.SEARCH_TITLE}</Text>
       </View>
 
-      <View
-        style={[
-          styles.searchBarContainer,
-          { backgroundColor: themeColors?.inputBackground },
-        ]}>
+      <View style={styles.searchBarContainer}>
         <TextInput
-          style={[styles.searchBar, { color: themeColors?.text }]}
-          placeholder="Search for a title..."
+          style={styles.searchBar}
+          placeholder={AppConstants.SEARCH_PLACEHOLDER}
           placeholderTextColor={themeColors?.primary}
           value={searchQuery}
           onChangeText={setSearchQuery}
         />
         <MaterialCommunityIcons
-          name="magnify"
+          name={AppIcons.Search}
           size={24}
           color={themeColors?.primary}
         />

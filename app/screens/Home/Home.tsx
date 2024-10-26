@@ -1,3 +1,5 @@
+import { ThemeContext } from 'app';
+import { AppConstants, CategoryTitles } from 'constant';
 import { useFetchMovies, useNavigation } from 'hooks';
 import React from 'react';
 import {
@@ -9,38 +11,23 @@ import {
   Text,
   View,
 } from 'react-native';
-import { Movie } from 'types';
-import { ThemeContext } from '../../App';
-import styles from './HomeStyles';
+import { Category } from 'types';
+import getStyles from './HomeStyles';
 
-const MovieScreen = () => {
+const Home: React.FC = () => {
   const { navigation } = useNavigation();
   const { themeColors } = React.useContext(ThemeContext) || {};
+  const styles = getStyles(themeColors);
 
-  const {
-    movies: popularMovies,
-    loading: popularLoading,
-    loadMore: loadMorePopular,
-    hasMore: hasMorePopular,
-  } = useFetchMovies('popular');
-  const {
-    movies: nowPlayingMovies,
-    loading: nowPlayingLoading,
-    loadMore: loadMoreNowPlaying,
-    hasMore: hasMoreNowPlaying,
-  } = useFetchMovies('now_playing');
-  const {
-    movies: upcomingMovies,
-    loading: upcomingLoading,
-    loadMore: loadMoreUpcoming,
-    hasMore: hasMoreUpcoming,
-  } = useFetchMovies('upcoming');
-  const {
-    movies: topRatedMovies,
-    loading: topRatedLoading,
-    loadMore: loadMoreTopRated,
-    hasMore: hasMoreTopRated,
-  } = useFetchMovies('top_rated');
+  const categories: Category[] = [
+    { title: CategoryTitles.popular, moviesHook: useFetchMovies('popular') },
+    {
+      title: CategoryTitles.nowPlaying,
+      moviesHook: useFetchMovies('now_playing'),
+    },
+    { title: CategoryTitles.upcoming, moviesHook: useFetchMovies('upcoming') },
+    { title: CategoryTitles.topRated, moviesHook: useFetchMovies('top_rated') },
+  ];
 
   const handleNavigateToDetails = (movieId: number) => {
     navigation.navigate('Detail', { id: movieId.toString() });
@@ -48,24 +35,19 @@ const MovieScreen = () => {
 
   const renderCategory = (
     title: string,
-    data: Movie[],
-    loading: boolean,
-    loadMore: () => void,
-    hasMore: boolean,
+    { movies, loading, loadMore, hasMore }: Category['moviesHook'],
   ) => (
-    <View style={styles.section}>
-      <Text style={[styles.sectionTitle, { color: themeColors?.text }]}>
-        {title}
-      </Text>
+    <View style={styles.section} key={title}>
+      <Text style={styles.sectionTitle}>{title}</Text>
       <FlatList
-        data={data}
+        data={movies}
         renderItem={({ item }) => (
           <Pressable
             style={styles.card}
             onPress={() => handleNavigateToDetails(item.id)}>
             <Image
               source={{
-                uri: `https://image.tmdb.org/t/p/w500${item.poster_path}`,
+                uri: `${AppConstants.BASE_IMAGE_PATH}${item.poster_path}`,
               }}
               style={styles.image}
             />
@@ -83,7 +65,7 @@ const MovieScreen = () => {
             <ActivityIndicator
               size="large"
               color={themeColors?.text}
-              style={{ padding: 16 }}
+              style={styles.loadingIndicator}
             />
           ) : null
         }
@@ -92,49 +74,15 @@ const MovieScreen = () => {
   );
 
   return (
-    <ScrollView
-      style={[
-        styles.container,
-        { backgroundColor: themeColors?.inputBackground },
-      ]}
-      showsVerticalScrollIndicator={false}>
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <View style={styles.header}>
-        <Image
-          source={require('assets/landing.png')}
-          style={styles.headerImage}
-        />
+        <Image source={AppConstants.LANDING_IMAGE} style={styles.headerImage} />
       </View>
-
-      {renderCategory(
-        'Popular',
-        popularMovies,
-        popularLoading,
-        loadMorePopular,
-        hasMorePopular,
-      )}
-      {renderCategory(
-        'Now Playing',
-        nowPlayingMovies,
-        nowPlayingLoading,
-        loadMoreNowPlaying,
-        hasMoreNowPlaying,
-      )}
-      {renderCategory(
-        'Upcoming',
-        upcomingMovies,
-        upcomingLoading,
-        loadMoreUpcoming,
-        hasMoreUpcoming,
-      )}
-      {renderCategory(
-        'Top Rated',
-        topRatedMovies,
-        topRatedLoading,
-        loadMoreTopRated,
-        hasMoreTopRated,
+      {categories.map(({ title, moviesHook }) =>
+        renderCategory(title, moviesHook),
       )}
     </ScrollView>
   );
 };
 
-export default MovieScreen;
+export default Home;

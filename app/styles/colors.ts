@@ -12,6 +12,9 @@ export const colors = {
     tabBarBorderTop: '#121212',
     tabBarInactive: '#8E8E93',
     tabBarActive: '#00C853',
+    border: 'rgba(0, 0, 0, 0.25)',
+    secondaryText: '#969696',
+    errorColor: '#FF0000',
   },
   light: {
     background: '#ffffff',
@@ -26,5 +29,8 @@ export const colors = {
     tabBarBorderTop: '#E0E0E0',
     tabBarInactive: '#8E8E93',
     tabBarActive: '#00C853',
+    border: 'rgba(0, 0, 0, 0.25)',
+    secondaryText: '#969696',
+    errorColor: '#FF0000',
   },
 };

@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { AppConstants } from 'constant';
+import { useEffect, useState } from 'react';
 import Config from 'react-native-config';
 import { MovieDetail } from 'types';
 
@@ -12,15 +13,12 @@ export const useFetchMovieDetails = (id: string) => {
     const fetchMovieDetails = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(
-          `https://api.themoviedb.org/3/movie/${id}`,
-          {
-            params: { api_key: Config.API_KEY, language: 'en-US' },
-          },
-        );
+        const response = await axios.get(`${Config.API_BASE_URL}${id}`, {
+          params: { api_key: Config.API_KEY, language: 'en-US' },
+        });
         setMovieDetails(response.data);
       } catch (error) {
-        setError('Failed to fetch movie details');
+        setError(AppConstants.MOVIE_DETAILS_FETCH_ERROR);
         console.error(error);
       } finally {
         setLoading(false);

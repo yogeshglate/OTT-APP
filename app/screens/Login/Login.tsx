@@ -1,11 +1,11 @@
+import { ThemeContext } from 'app';
 import { Button } from 'components';
+import { AppConstants, AppIcons } from 'constant'; // Import AppConstants
 import { useAuth, useNavigation } from 'hooks';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Keyboard, Pressable, Text, View } from 'react-native';
 import { TextInput } from 'react-native-paper';
-import { ThemeContext } from '../../App';
-import { useFocusEffect } from '@react-navigation/native';
-import styles from './LoginStyles';
+import getStyles from './LoginStyles';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -15,8 +15,9 @@ const Login = () => {
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
 
-  const { navigation } = useNavigation();
+  const { navigation, useFocusEffect } = useNavigation();
   const { themeColors } = React.useContext(ThemeContext) || {};
+  const styles = getStyles(themeColors);
   const { login } = useAuth();
 
   const handleSignUpPress = () => {
@@ -35,18 +36,18 @@ const Login = () => {
     let isValid = true;
 
     if (!email) {
-      setEmailError('Email is required');
+      setEmailError(AppConstants.EMAIL_REQUIRED_ERROR);
       isValid = false;
     } else if (!validateEmail(email)) {
-      setEmailError('Please enter a valid email');
+      setEmailError(AppConstants.EMAIL_INVALID_ERROR);
       isValid = false;
     }
 
     if (!password) {
-      setPasswordError('Password is required');
+      setPasswordError(AppConstants.PASSWORD_REQUIRED_ERROR);
       isValid = false;
     } else if (password.length < 6) {
-      setPasswordError('Password must be at least 6 characters');
+      setPasswordError(AppConstants.PASSWORD_LENGTH_ERROR);
       isValid = false;
     }
 
@@ -55,7 +56,7 @@ const Login = () => {
       if (isLoggedIn) {
         navigation.navigate('HomeTab');
       } else {
-        console.error('Invalid Credentials');
+        console.error(AppConstants.LOGIN_FAILURE_MESSAGE);
       }
     }
   };
@@ -70,17 +71,15 @@ const Login = () => {
   );
 
   return (
-    <Pressable
-      style={[styles.login, { backgroundColor: themeColors?.background }]}
-      onPress={Keyboard.dismiss}>
+    <Pressable style={styles.login} onPress={Keyboard.dismiss}>
       <Text style={[styles.loginTitle, { color: themeColors?.text }]}>
-        Login
+        {AppConstants.LOGIN_TITLE}
       </Text>
 
       <View style={styles.inputContainer}>
         <TextInput
           mode="outlined"
-          label="Email"
+          label={AppConstants.EMAIL_LABEL}
           value={email}
           onChangeText={text => {
             setEmail(text);
@@ -90,12 +89,12 @@ const Login = () => {
           }}
           left={
             <TextInput.Icon
-              icon="email"
+              icon={AppIcons.Email}
               size={30}
               color={themeColors?.primary}
             />
           }
-          style={[styles.input, { backgroundColor: themeColors?.background }]}
+          style={styles.input}
           outlineColor={themeColors?.outlineColor}
           activeOutlineColor={themeColors?.primary}
           textColor={themeColors?.text}
@@ -112,7 +111,7 @@ const Login = () => {
       <View style={styles.inputContainer}>
         <TextInput
           mode="outlined"
-          label="Password"
+          label={AppConstants.PASSWORD_LABEL}
           value={password}
           onChangeText={text => {
             setPassword(text);
@@ -123,20 +122,24 @@ const Login = () => {
           secureTextEntry={!passwordVisible}
           left={
             <TextInput.Icon
-              icon="lock"
+              icon={AppIcons.Password}
               size={30}
               color={themeColors?.primary}
             />
           }
           right={
             <TextInput.Icon
-              icon={passwordVisible ? 'eye-off' : 'eye'}
+              icon={
+                passwordVisible
+                  ? AppIcons.PasswordHidden
+                  : AppIcons.PasswordVisible
+              }
               size={30}
               color={themeColors?.text}
               onPress={() => setPasswordVisible(prev => !prev)}
             />
           }
-          style={[styles.input, { backgroundColor: themeColors?.background }]}
+          style={styles.input}
           outlineColor={themeColors?.outlineColor}
           activeOutlineColor={themeColors?.primary}
           textColor={themeColors?.text}
@@ -152,16 +155,16 @@ const Login = () => {
         ) : null}
       </View>
 
-      <Button text="Login" onPress={handleLoginPress} type="contained" />
+      <Button
+        text={AppConstants.LOGIN_TITLE}
+        onPress={handleLoginPress}
+        type="contained"
+      />
 
       <View style={styles.signupContainer}>
-        <Text style={[styles.signupText, { color: themeColors?.text }]}>
-          Haven’t made an account?
-        </Text>
+        <Text style={styles.signupText}>{AppConstants.SIGNUP_PROMPT}</Text>
         <Pressable onPress={handleSignUpPress}>
-          <Text style={[styles.signupLink, { color: themeColors?.signupLink }]}>
-            Sign Up
-          </Text>
+          <Text style={styles.signupLink}>{AppConstants.SIGNUP_LINK_TEXT}</Text>
         </Pressable>
       </View>
     </Pressable>
