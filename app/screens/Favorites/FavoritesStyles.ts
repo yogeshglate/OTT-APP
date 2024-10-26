@@ -73,4 +73,19 @@ export default StyleSheet.create({
     fontFamily: 'Inter-Bold',
     fontSize: 18,
   },
+  emptyListContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+  },
+  emptyListText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  emptyListSubText: {
+    fontSize: 14,
+    textAlign: 'center',
+  },
 });

@@ -1,10 +1,10 @@
+import { useFavorites, useNavigation } from 'hooks';
 import React, { useCallback } from 'react';
 import { FlatList, Image, Pressable, Text, View } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { MovieDetail } from 'types';
 import { ThemeContext } from '../../App';
 import styles from './FavoritesStyles';
-import { useFavorites, useNavigation } from 'hooks';
-import { MovieDetail } from 'types';
 
 const Favorites = () => {
   const { themeColors } = React.useContext(ThemeContext) || {};
@@ -56,6 +56,17 @@ const Favorites = () => {
     </Pressable>
   );
 
+  const renderEmptyListMessage = () => (
+    <View style={styles.emptyListContainer}>
+      <Text style={[styles.emptyListText, { color: themeColors?.text }]}>
+        No favorites added yet!
+      </Text>
+      <Text style={[styles.emptyListSubText, { color: themeColors?.text }]}>
+        Add some movies to your favorites list to see them here.
+      </Text>
+    </View>
+  );
+
   return (
     <View
       style={[styles.container, { backgroundColor: themeColors?.background }]}>
@@ -71,6 +82,7 @@ const Favorites = () => {
         keyExtractor={item => item.id.toString()}
         contentContainerStyle={styles.listContainer}
         showsVerticalScrollIndicator={false}
+        ListEmptyComponent={renderEmptyListMessage}
       />
     </View>
   );

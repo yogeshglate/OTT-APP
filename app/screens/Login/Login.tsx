@@ -1,15 +1,19 @@
 import { Button } from 'components';
 import { useAuth, useNavigation } from 'hooks';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Keyboard, Pressable, Text, View } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import { ThemeContext } from '../../App';
+import { useFocusEffect } from '@react-navigation/native';
 import styles from './LoginStyles';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordVisible, setPasswordVisible] = useState(false);
+
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
 
   const { navigation } = useNavigation();
   const { themeColors } = React.useContext(ThemeContext) || {};
@@ -19,15 +23,51 @@ const Login = () => {
     navigation.navigate('SignUp');
   };
 
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
   const handleLoginPress = async () => {
-    console.log('Login pressed');
-    const isLoggedIn = await login(email, password);
-    if (isLoggedIn) {
-      navigation.navigate('HomeTab');
-    } else {
-      console.error('Invalid Credentials');
+    setEmailError('');
+    setPasswordError('');
+
+    let isValid = true;
+
+    if (!email) {
+      setEmailError('Email is required');
+      isValid = false;
+    } else if (!validateEmail(email)) {
+      setEmailError('Please enter a valid email');
+      isValid = false;
+    }
+
+    if (!password) {
+      setPasswordError('Password is required');
+      isValid = false;
+    } else if (password.length < 6) {
+      setPasswordError('Password must be at least 6 characters');
+      isValid = false;
+    }
+
+    if (isValid) {
+      const isLoggedIn = await login(email, password);
+      if (isLoggedIn) {
+        navigation.navigate('HomeTab');
+      } else {
+        console.error('Invalid Credentials');
+      }
     }
   };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      setEmail('');
+      setPassword('');
+      setEmailError('');
+      setPasswordError('');
+    }, []),
+  );
 
   return (
     <Pressable
@@ -42,7 +82,12 @@ const Login = () => {
           mode="outlined"
           label="Email"
           value={email}
-          onChangeText={setEmail}
+          onChangeText={text => {
+            setEmail(text);
+            if (emailError && validateEmail(text)) {
+              setEmailError('');
+            }
+          }}
           left={
             <TextInput.Icon
               icon="email"
@@ -61,6 +106,7 @@ const Login = () => {
             },
           }}
         />
+        {emailError ? <Text style={styles.errorText}>{emailError}</Text> : null}
       </View>
 
       <View style={styles.inputContainer}>
@@ -68,7 +114,12 @@ const Login = () => {
           mode="outlined"
           label="Password"
           value={password}
-          onChangeText={setPassword}
+          onChangeText={text => {
+            setPassword(text);
+            if (passwordError && text.length >= 6) {
+              setPasswordError('');
+            }
+          }}
           secureTextEntry={!passwordVisible}
           left={
             <TextInput.Icon
@@ -96,6 +147,9 @@ const Login = () => {
             },
           }}
         />
+        {passwordError ? (
+          <Text style={styles.errorText}>{passwordError}</Text>
+        ) : null}
       </View>
 
       <Button text="Login" onPress={handleLoginPress} type="contained" />

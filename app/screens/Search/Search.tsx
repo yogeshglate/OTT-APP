@@ -53,11 +53,11 @@ const Search = () => {
       data={data}
       renderItem={renderMovieItem}
       keyExtractor={item => item.id.toString()}
-      numColumns={2} // Display two columns
+      numColumns={2}
       showsVerticalScrollIndicator={false}
       onEndReachedThreshold={0.5}
       onEndReached={() => {
-        if (hasMore) loadMore(); // Load more movies when the end of the list is reached
+        if (hasMore) loadMore();
       }}
       ListFooterComponent={
         loading && hasMore ? (

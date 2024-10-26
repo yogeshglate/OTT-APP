@@ -4,6 +4,7 @@ import React from 'react';
 import { Keyboard, Pressable, Text, View } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import { ThemeContext } from '../../App';
+import { useFocusEffect } from '@react-navigation/native'; // Import useFocusEffect
 import styles from './SignUpStyles';
 
 const SignUp = () => {
@@ -11,6 +12,10 @@ const SignUp = () => {
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [passwordVisible, setPasswordVisible] = React.useState(false);
+
+  const [emailError, setEmailError] = React.useState('');
+  const [usernameError, setUsernameError] = React.useState('');
+  const [passwordError, setPasswordError] = React.useState('');
 
   const { navigation } = useNavigation();
   const { register } = useAuth();
@@ -20,20 +25,61 @@ const SignUp = () => {
     navigation.navigate('Login');
   };
 
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
   const handleSignUp = async () => {
-    const newUser = {
-      email,
-      password,
-      username,
-    };
-    try {
-      await register(newUser);
-      navigation.navigate('Login');
-      console.warn('User Created Successfully');
-    } catch (error) {
-      console.error('Invalid Credentials');
+    setEmailError('');
+    setUsernameError('');
+    setPasswordError('');
+
+    let isValid = true;
+
+    if (!email) {
+      setEmailError('Email is required');
+      isValid = false;
+    } else if (!validateEmail(email)) {
+      setEmailError('Please enter a valid email');
+      isValid = false;
+    }
+
+    if (!username) {
+      setUsernameError('Username is required');
+      isValid = false;
+    }
+
+    if (!password) {
+      setPasswordError('Password is required');
+      isValid = false;
+    } else if (password.length < 6) {
+      setPasswordError('Password must be at least 6 characters');
+      isValid = false;
+    }
+
+    if (isValid) {
+      const newUser = { email, password, username };
+      try {
+        await register(newUser);
+        navigation.navigate('Login');
+        console.warn('User Created Successfully');
+      } catch (error) {
+        console.error('Invalid Credentials');
+      }
     }
   };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      setEmail('');
+      setUsername('');
+      setPassword('');
+      setEmailError('');
+      setUsernameError('');
+      setPasswordError('');
+    }, []),
+  );
 
   return (
     <Pressable
@@ -48,7 +94,12 @@ const SignUp = () => {
           mode="outlined"
           label="Email"
           value={email}
-          onChangeText={setEmail}
+          onChangeText={text => {
+            setEmail(text);
+            if (emailError && validateEmail(text)) {
+              setEmailError('');
+            }
+          }}
           left={
             <TextInput.Icon
               icon="email"
@@ -71,6 +122,7 @@ const SignUp = () => {
             },
           }}
         />
+        {emailError ? <Text style={styles.errorText}>{emailError}</Text> : null}
       </View>
 
       <View style={styles.inputContainer}>
@@ -78,7 +130,12 @@ const SignUp = () => {
           mode="outlined"
           label="Username"
           value={username}
-          onChangeText={setUsername}
+          onChangeText={text => {
+            setUsername(text);
+            if (usernameError && text.length > 0) {
+              setUsernameError('');
+            }
+          }}
           left={
             <TextInput.Icon
               icon="account"
@@ -100,6 +157,9 @@ const SignUp = () => {
             },
           }}
         />
+        {usernameError ? (
+          <Text style={styles.errorText}>{usernameError}</Text>
+        ) : null}
       </View>
 
       <View style={styles.inputContainer}>
@@ -107,7 +167,12 @@ const SignUp = () => {
           mode="outlined"
           label="Password"
           value={password}
-          onChangeText={setPassword}
+          onChangeText={text => {
+            setPassword(text);
+            if (passwordError && text.length >= 6) {
+              setPasswordError('');
+            }
+          }}
           secureTextEntry={!passwordVisible}
           left={
             <TextInput.Icon
@@ -138,6 +203,9 @@ const SignUp = () => {
             },
           }}
         />
+        {passwordError ? (
+          <Text style={styles.errorText}>{passwordError}</Text>
+        ) : null}
       </View>
 
       <Button text="Sign Up" onPress={handleSignUp} type="contained" />
