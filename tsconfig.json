@@ -1,20 +1,22 @@
 {
   "extends": "@react-native/typescript-config/tsconfig.json",
   "compilerOptions": {
-    "baseUrl": "./app", // Base directory for absolute imports
+    "typeRoots": ["node_modules/@types", "src/types"],
+    "types": ["node"],
+    "baseUrl": "./app", // Set the base directory to the app folder
     "paths": {
-      "@assets/*": ["assets/*"],
-      "@components/*": ["components/*"],
-      "@context/*": ["context/*"],
-      "@hooks/*": ["hooks/*"],
-      "@navigation/*": ["navigation/*"],
-      "@screens/*": ["screens/*"],
-      "@services/*": ["services/*"],
-      "@styles/*": ["styles/*"],
-      "@types/*": ["types/*"],
-      "@utils/*": ["utils/*"]
+      "assets/*": ["./app/assets/*"],
+      "components": ["components/index"],
+      "context": ["context/index"],
+      "hooks": ["hooks/index"],
+      "navigation": ["navigation/index"],
+      "screens": ["screens/index"],
+      "services": ["services/index"],
+      "styles": ["styles/index"],
+      "types/*": ["./app/types/index"],
+      "utils": ["utils/index"]
     }
   },
-  "include": ["app/**/*", "node_modules"], // Node Modules Added Due To Typescript Error "DO NOT REMOVE"
-  "exclude": ["babel.config.js", "metro.config.js"]
+  "include": ["app/**/*"], // Include app folder and subfolders
+  "exclude": ["node_modules", "babel.config.js", "metro.config.js"] // Exclude these files from compilation
 }

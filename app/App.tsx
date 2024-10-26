@@ -1,24 +1,29 @@
-import { View, Text, StyleSheet } from 'react-native';
-import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { useDarkMode } from 'hooks';
+import { AuthNavigator } from 'navigation';
+import React, { createContext } from 'react';
+import { colors } from 'styles';
+import { ThemeContextType } from 'types';
 
-const App = () => {
+export const ThemeContext = createContext<ThemeContextType>(null);
+
+const AppContent = () => {
+  const { isDarkMode, setColorTheme } = useDarkMode();
+
+  const themeColors = isDarkMode ? colors.dark : colors.light;
+  const toggleTheme = (isDark: boolean) => setColorTheme(isDark);
+
   return (
-    <View style={styles.container}>
-      <Text>Initial Project Setup </Text>
-      <Text>With Layered Folder Structure </Text>
-      <Text>And Absolute Imports </Text>
-      <Text>And App Icons For Android & iOS</Text>
-      <Text>Installed Necessary Dependencies</Text>
-    </View>
+    <NavigationContainer>
+      <ThemeContext.Provider value={{ isDarkMode, themeColors, toggleTheme }}>
+        <AuthNavigator />
+      </ThemeContext.Provider>
+    </NavigationContainer>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
+const App = () => {
+  return <AppContent />;
+};
 
 export default App;
