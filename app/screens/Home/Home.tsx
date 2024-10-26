@@ -96,7 +96,8 @@ const MovieScreen = () => {
       style={[
         styles.container,
         { backgroundColor: themeColors?.inputBackground },
-      ]}>
+      ]}
+      showsVerticalScrollIndicator={false}>
       <View style={styles.header}>
         <Image
           source={require('assets/landing.png')}
