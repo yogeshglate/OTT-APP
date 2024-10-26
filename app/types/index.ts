@@ -32,4 +32,10 @@ type ThemeContextType = {
   user: User | null;
 } | null;
 
+export interface Movie {
+  id: number;
+  title: string;
+  poster_path: string;
+}
+
 export type { ButtonProps, RootStackParamList, ThemeContextType, User };
