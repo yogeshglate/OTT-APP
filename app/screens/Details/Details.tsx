@@ -25,7 +25,8 @@ const ShowDetailScreen = () => {
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView
+      style={[styles.container, { backgroundColor: themeColors?.background }]}>
       <View
         style={[styles.appBar, { backgroundColor: themeColors?.background }]}>
         <Pressable onPress={handleGoBack}>
@@ -37,9 +38,7 @@ const ShowDetailScreen = () => {
       </View>
 
       {loading ? (
-        <View style={{ flex: 1 }}>
-          <Loader isLoading />
-        </View>
+        <Loader isLoading />
       ) : (
         <>
           <Image
@@ -49,24 +48,37 @@ const ShowDetailScreen = () => {
             style={styles.bannerImage}
           />
 
-          <View style={styles.detailsContainer}>
-            <Text style={styles.showTitle}>{movieDetails?.title}</Text>
-            <Text style={styles.showInfo}>
+          <View
+            style={[
+              styles.detailsContainer,
+              { backgroundColor: themeColors?.background },
+            ]}>
+            <Text style={[styles.showTitle, { color: themeColors?.text }]}>
+              {movieDetails?.title}
+            </Text>
+            <Text style={[styles.showInfo, { color: themeColors?.text }]}>
               {movieDetails?.release_date} | {movieDetails?.runtime} min
             </Text>
-            <Text style={styles.showDescription}>{movieDetails?.overview}</Text>
-            <Text style={styles.showAdditionalInfo}>
+            <Text
+              style={[styles.showDescription, { color: themeColors?.text }]}>
+              {movieDetails?.overview}
+            </Text>
+            <Text
+              style={[styles.showAdditionalInfo, { color: themeColors?.text }]}>
               <Text style={styles.boldText}>Genres:</Text>{' '}
               {movieDetails?.production_companies
                 ?.map(creator => creator.name)
                 .join(', ')}
             </Text>
-            <Text style={styles.showAdditionalInfo}>
-              <Text style={styles.boldText}>Genres:</Text>{' '}
+            <Text
+              style={[styles.showAdditionalInfo, { color: themeColors?.text }]}>
+              <Text style={styles.boldText}>Genres : </Text>{' '}
               {movieDetails?.genres?.map(genre => genre.name).join(', ')}
             </Text>
-            <Text style={styles.rating}>
-              Rating: {movieDetails?.vote_average} / 10
+            <Text
+              style={[styles.showAdditionalInfo, { color: themeColors?.text }]}>
+              <Text style={styles.boldText}>Rating : </Text>
+              {movieDetails?.vote_average} / 10
             </Text>
           </View>
         </>

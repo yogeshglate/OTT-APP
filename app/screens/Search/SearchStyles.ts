@@ -1,24 +1,8 @@
 import { StyleSheet } from 'react-native';
-
-export default StyleSheet.create({
+export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#121212',
-    paddingTop: 20,
-  },
-  searchBarContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#2b2930',
-    borderRadius: 28,
-    marginHorizontal: 16,
-    marginTop: 16,
     padding: 16,
-  },
-  searchBar: {
-    flex: 1,
-    fontSize: 16,
-    fontFamily: 'Roboto-Regular',
   },
   appBar: {
     height: 56,
@@ -32,5 +16,36 @@ export default StyleSheet.create({
     fontWeight: '700',
     fontFamily: 'Inter-Bold',
     fontSize: 18,
+  },
+  searchBarContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderRadius: 8,
+    paddingHorizontal: 8,
+    margin: 26,
+  },
+  searchBar: {
+    flex: 1,
+    height: 60,
+    padding: 8,
+  },
+  movieCard: {
+    flex: 1,
+    margin: 4,
+    backgroundColor: '#222',
+    borderRadius: 8,
+    overflow: 'hidden',
+  },
+  movieImage: {
+    width: '100%',
+    height: 150,
+  },
+  movieTitle: {
+    padding: 8,
+    textAlign: 'center',
+  },
+  loadingText: {
+    textAlign: 'center',
+    padding: 16,
   },
 });
