@@ -1,9 +1,8 @@
-import React from 'react';
-import { Image, StyleSheet, View, Dimensions } from 'react-native';
 import { Button } from 'components';
 import { useNavigation } from 'hooks';
-
-const { height } = Dimensions.get('window');
+import React from 'react';
+import { Image, View } from 'react-native';
+import styles from './LandingStyles'; // Adjust the import path as necessary
 
 const Landing = () => {
   const navigation = useNavigation();
@@ -30,27 +29,5 @@ const Landing = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  landing: {
-    flex: 1,
-    backgroundColor: '#121212',
-    justifyContent: 'flex-end',
-  },
-  bannerIcon: {
-    position: 'absolute',
-    width: '100%',
-    height: height,
-  },
-  buttonContainer: {
-    backgroundColor: 'rgba(18, 18, 18, 0.9)',
-    padding: 16,
-    paddingBottom: 40,
-    alignItems: 'center',
-    width: '100%',
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
-  },
-});
 
 export default Landing;

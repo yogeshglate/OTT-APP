@@ -23,12 +23,14 @@ type RootStackParamList = {
 interface User {
   email: string;
   password: string;
+  username: string;
 }
 
 type ThemeContextType = {
   isDarkMode: boolean;
   themeColors: typeof colors.light;
   toggleTheme: (isDark: boolean) => void;
+  user: User | null;
 } | null;
 
 export type { ButtonProps, RootStackParamList, User, ThemeContextType };

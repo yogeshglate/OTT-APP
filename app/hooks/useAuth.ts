@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { User } from 'types';
 
 export const useAuth = () => {
-  const [user, setUser] = useState<{ email: string; password: string } | null>(
-    null,
-  );
+  const [user, setUser] = useState<User | null>(null);
 
   const login = async (email: string, password: string) => {
     const storedUser = await AsyncStorage.getItem('user');
@@ -18,8 +17,11 @@ export const useAuth = () => {
     return false;
   };
 
-  const register = async (email: string, password: string) => {
-    const newUser = { email, password };
+  const register = async (newUser: {
+    email: string;
+    password: string;
+    username: string;
+  }) => {
     await AsyncStorage.setItem('user', JSON.stringify(newUser));
     setUser(newUser);
   };
