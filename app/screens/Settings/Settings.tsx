@@ -7,7 +7,7 @@ import styles from './SettingsStyles';
 
 const Settings = () => {
   const { themeColors } = React.useContext(ThemeContext) || {};
-  const navigation = useNavigation();
+  const { navigation } = useNavigation();
   const { logout } = useAuth();
 
   const handleLogout = async () => {

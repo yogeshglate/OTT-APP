@@ -14,7 +14,7 @@ import { ThemeContext } from '../../App';
 import styles from './HomeStyles';
 
 const MovieScreen = () => {
-  const navigation = useNavigation();
+  const { navigation } = useNavigation();
   const { themeColors } = React.useContext(ThemeContext) || {};
 
   const {

@@ -12,7 +12,7 @@ const SignUp = () => {
   const [password, setPassword] = React.useState('');
   const [passwordVisible, setPasswordVisible] = React.useState(false);
 
-  const navigation = useNavigation();
+  const { navigation } = useNavigation();
   const { register } = useAuth();
   const { themeColors } = React.useContext(ThemeContext) || {};
 

@@ -1,9 +1,14 @@
 import {
   useNavigation as nativeUseNavigation,
+  useRoute as nativeUseRoute,
   NavigationProp,
+  RouteProp,
 } from '@react-navigation/native';
 import { RootStackParamList } from 'types';
 
 export const useNavigation = () => {
-  return nativeUseNavigation<NavigationProp<RootStackParamList>>();
+  const navigation = nativeUseNavigation<NavigationProp<RootStackParamList>>();
+  const route = nativeUseRoute<RouteProp<RootStackParamList>>();
+
+  return { navigation, route };
 };

@@ -11,7 +11,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [passwordVisible, setPasswordVisible] = useState(false);
 
-  const navigation = useNavigation();
+  const { navigation } = useNavigation();
   const { themeColors } = React.useContext(ThemeContext) || {};
   const { login } = useAuth();
 

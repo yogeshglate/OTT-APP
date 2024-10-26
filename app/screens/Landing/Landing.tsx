@@ -5,7 +5,7 @@ import { Image, View } from 'react-native';
 import styles from './LandingStyles';
 
 const Landing = () => {
-  const navigation = useNavigation();
+  const { navigation } = useNavigation();
 
   const navigateToLogin = () => {
     navigation.navigate('Login');

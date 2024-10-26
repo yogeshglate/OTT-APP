@@ -1,6 +1,7 @@
+import { Loader } from 'components';
+import { useFetchMovieDetails, useNavigation } from 'hooks';
 import React from 'react';
 import {
-  FlatList,
   Image,
   Pressable,
   ScrollView,
@@ -8,39 +9,17 @@ import {
   Text,
   View,
 } from 'react-native';
-import { ThemeContext } from '../../App';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { useNavigation } from 'hooks';
-
-const episodeData = [
-  {
-    id: '1',
-    title: 'Episode 1',
-    duration: '47m',
-    description: 'Tormented by her high school classmates and with nowhere...',
-  },
-  {
-    id: '2',
-    title: 'Episode 2',
-    duration: '52m',
-    description: 'With Park Yeon-jin’s wedding on...',
-  },
-];
-
-const renderEpisode = ({ item }: any) => (
-  <View style={styles.episodeCard}>
-    <Image style={styles.episodeImage} source={require('assets/landing.png')} />
-    <View style={styles.episodeInfo}>
-      <Text style={styles.episodeTitle}>{item.title}</Text>
-      <Text style={styles.episodeDuration}>{item.duration}</Text>
-      <Text style={styles.episodeDescription}>{item.description}</Text>
-    </View>
-  </View>
-);
+import { ThemeContext } from '../../App';
 
 const ShowDetailScreen = () => {
   const { themeColors } = React.useContext(ThemeContext) || {};
-  const navigation = useNavigation();
+  const { navigation, route } = useNavigation();
+  const movieId = route.params?.id || '';
+  console.log(movieId);
+
+  const { movieDetails, loading, error } = useFetchMovieDetails(movieId);
+
   const handleGoBack = () => {
     navigation.goBack();
   };
@@ -53,47 +32,45 @@ const ShowDetailScreen = () => {
           <Icon name="arrow-left" size={24} color={themeColors?.text} />
         </Pressable>
         <Text style={[styles.title, { color: themeColors?.text }]}>
-          The Glory
+          {movieDetails ? movieDetails.title : 'Loading...'}
         </Text>
       </View>
 
-      <Image
-        source={require('assets/landing.png')}
-        // source={{ uri: 'https://path-to-banner-image/glory-banner.jpg' }}
-        style={styles.bannerImage}
-      />
+      {loading ? (
+        <View style={{ flex: 1 }}>
+          <Loader isLoading />
+        </View>
+      ) : (
+        <>
+          <Image
+            source={{
+              uri: `https://image.tmdb.org/t/p/w500${movieDetails?.backdrop_path}`,
+            }}
+            style={styles.bannerImage}
+          />
 
-      <View style={styles.detailsContainer}>
-        <Text style={styles.showTitle}>The Glory</Text>
-        <Text style={styles.showInfo}>2022 | 18+ | 1 Season | K-Drama</Text>
-        <Text style={styles.showDescription}>
-          A young woman, bullied to the point of deciding to drop out of school,
-          plans the best way to get revenge. After becoming a primary school
-          teacher, she takes in the son of the man who tormented her the most to
-          enact her vengeance.
-        </Text>
-        <Text style={styles.showAdditionalInfo}>
-          <Text style={styles.boldText}>Starring:</Text> Song Hye-kyo, Lee
-          Do-hyun, Lim Ji-yeon
-        </Text>
-        <Text style={styles.showAdditionalInfo}>
-          <Text style={styles.boldText}>Creators:</Text> Kim Eun-sook, An Gil-ho
-        </Text>
-        <Text style={styles.showAdditionalInfo}>
-          <Text style={styles.boldText}>Genre:</Text> Revenge, Psychological
-          Thriller
-        </Text>
-      </View>
-
-      {/* Episode List */}
-      <Text style={styles.episodesTitle}>Episodes</Text>
-      <Text style={styles.seasonTitle}>Season 1</Text>
-      <FlatList
-        data={episodeData}
-        renderItem={renderEpisode}
-        keyExtractor={item => item.id}
-        showsVerticalScrollIndicator={false}
-      />
+          <View style={styles.detailsContainer}>
+            <Text style={styles.showTitle}>{movieDetails?.title}</Text>
+            <Text style={styles.showInfo}>
+              {movieDetails?.release_date} | {movieDetails?.runtime} min
+            </Text>
+            <Text style={styles.showDescription}>{movieDetails?.overview}</Text>
+            <Text style={styles.showAdditionalInfo}>
+              <Text style={styles.boldText}>Genres:</Text>{' '}
+              {movieDetails?.production_companies
+                ?.map(creator => creator.name)
+                .join(', ')}
+            </Text>
+            <Text style={styles.showAdditionalInfo}>
+              <Text style={styles.boldText}>Genres:</Text>{' '}
+              {movieDetails?.genres?.map(genre => genre.name).join(', ')}
+            </Text>
+            <Text style={styles.rating}>
+              Rating: {movieDetails?.vote_average} / 10
+            </Text>
+          </View>
+        </>
+      )}
     </ScrollView>
   );
 };
@@ -206,6 +183,11 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     fontFamily: 'Inter-Bold',
     fontSize: 18,
+  },
+  rating: {
+    color: '#aaa',
+    fontSize: 14,
+    marginBottom: 5,
   },
 });
 

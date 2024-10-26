@@ -38,4 +38,22 @@ export interface Movie {
   poster_path: string;
 }
 
+export interface MovieDetail {
+  id: number;
+  title: string;
+  overview: string;
+  poster_path: string;
+  backdrop_path: string;
+  release_date: string;
+  genres: { id: number; name: string }[];
+  runtime: number;
+  vote_average: number;
+  production_companies: {
+    id: number;
+    logo_path: string;
+    name: string;
+    origin_country: string;
+  }[];
+}
+
 export type { ButtonProps, RootStackParamList, ThemeContextType, User };
