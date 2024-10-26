@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   input: {
-    backgroundColor: 'transparent', // This will be dynamically overridden based on mode
+    backgroundColor: 'transparent',
   },
   loginContainer: {
     flexDirection: 'row',

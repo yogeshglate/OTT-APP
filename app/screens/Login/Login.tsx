@@ -1,10 +1,10 @@
-import { Button } from 'components'; // Using the reusable Button component
+import { Button } from 'components';
 import { useAuth, useNavigation } from 'hooks';
 import React, { useState } from 'react';
 import { Keyboard, Pressable, Text, View } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import { ThemeContext } from '../../App';
-import styles from './LoginStyles'; // Adjust the import path as necessary
+import styles from './LoginStyles';
 
 const Login = () => {
   const [email, setEmail] = useState('');

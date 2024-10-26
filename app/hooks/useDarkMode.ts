@@ -9,7 +9,6 @@ export const useDarkMode = () => {
 
   const [isDarkMode, setIsDarkMode] = useState(getCurrentColorScheme());
 
-  // Toggle theme manually
   const setColorTheme = (isDark: boolean) => setIsDarkMode(isDark);
 
   useEffect(() => {

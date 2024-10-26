@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
   settings: {
     flex: 1,
-    padding: 20,
+    paddingTop: 20,
   },
   appBar: {
     height: 56,

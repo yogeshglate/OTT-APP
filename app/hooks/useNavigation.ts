@@ -1,4 +1,3 @@
-// src/hooks/useNavigation.ts
 import {
   useNavigation as nativeUseNavigation,
   NavigationProp,

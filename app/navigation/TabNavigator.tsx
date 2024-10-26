@@ -1,26 +1,10 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Details, Favorites, Home, Search, Settings } from 'screens';
 import React from 'react';
 import { useColorScheme } from 'react-native';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Favorites, Home, Search, Settings } from 'screens';
 
 const Tab = createBottomTabNavigator();
-const Stack = createNativeStackNavigator();
-
-const HomeStack = () => (
-  <Stack.Navigator screenOptions={{ headerShown: false }}>
-    <Stack.Screen name="HomeTab" component={Home} />
-    <Stack.Screen name="DetailTab" component={Details} />
-  </Stack.Navigator>
-);
-
-const FavoriteStack = () => (
-  <Stack.Navigator screenOptions={{ headerShown: false }}>
-    <Stack.Screen name="FavoriteTab" component={Favorites} />
-    <Stack.Screen name="DetailTab" component={Details} />
-  </Stack.Navigator>
-);
 
 export const TabNavigator = () => {
   const scheme = useColorScheme();
@@ -49,7 +33,7 @@ export const TabNavigator = () => {
       }}>
       <Tab.Screen
         name="Home"
-        component={HomeStack}
+        component={Home}
         options={{
           tabBarIcon: ({ color, size }) => (
             <TabIcon iconName="home" color={color} size={size} />
@@ -67,7 +51,7 @@ export const TabNavigator = () => {
       />
       <Tab.Screen
         name="Favorite"
-        component={FavoriteStack}
+        component={Favorites}
         options={{
           tabBarIcon: ({ color, size }) => (
             <TabIcon iconName="heart" color={color} size={size} />

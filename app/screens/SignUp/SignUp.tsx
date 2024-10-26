@@ -1,10 +1,10 @@
-import { Button } from 'components'; // Using the reusable Button component
+import { Button } from 'components';
 import { useAuth, useNavigation } from 'hooks';
 import React from 'react';
 import { Keyboard, Pressable, Text, View } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import { ThemeContext } from '../../App';
-import styles from './SignUpStyles'; // Adjust the import path as necessary
+import styles from './SignUpStyles';
 
 const SignUp = () => {
   const [email, setEmail] = React.useState('');
@@ -121,7 +121,7 @@ const SignUp = () => {
               icon={passwordVisible ? 'eye-off' : 'eye'}
               size={30}
               color={themeColors?.secondary}
-              onPress={() => setPasswordVisible(prev => !prev)} // Toggle visibility
+              onPress={() => setPasswordVisible(prev => !prev)}
             />
           }
           style={[

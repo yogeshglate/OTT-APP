@@ -2,8 +2,8 @@ import { useAuth, useNavigation } from 'hooks';
 import * as React from 'react';
 import { Pressable, Text, View } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { ThemeContext } from '../../App'; // Adjust the import path as necessary
-import styles from './SettingsStyles'; // Adjust the import path as necessary
+import { ThemeContext } from '../../App';
+import styles from './SettingsStyles';
 
 const Settings = () => {
   const { themeColors } = React.useContext(ThemeContext) || {};

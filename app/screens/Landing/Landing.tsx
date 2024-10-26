@@ -2,7 +2,7 @@ import { Button } from 'components';
 import { useNavigation } from 'hooks';
 import React from 'react';
 import { Image, View } from 'react-native';
-import styles from './LandingStyles'; // Adjust the import path as necessary
+import styles from './LandingStyles';
 
 const Landing = () => {
   const navigation = useNavigation();

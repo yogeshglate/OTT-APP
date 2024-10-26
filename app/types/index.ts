@@ -1,11 +1,10 @@
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { GestureResponderEvent } from 'react-native';
 import { colors } from 'styles';
 
 interface ButtonProps {
   text: string;
-  onPress: (event: GestureResponderEvent) => void; // Type for onPress
-  type?: 'contained' | 'outlined'; // Limiting type prop to 'contained' or 'outlined'
+  onPress: (event: GestureResponderEvent) => void;
+  type?: 'contained' | 'outlined';
 }
 
 type RootStackParamList = {
@@ -13,7 +12,7 @@ type RootStackParamList = {
   Search: undefined;
   Favorites: undefined;
   Settings: undefined;
-  Detail: { id: number };
+  Detail: { id: string };
   Landing: undefined;
   Login: undefined;
   SignUp: undefined;
@@ -33,4 +32,4 @@ type ThemeContextType = {
   user: User | null;
 } | null;
 
-export type { ButtonProps, RootStackParamList, User, ThemeContextType };
+export type { ButtonProps, RootStackParamList, ThemeContextType, User };

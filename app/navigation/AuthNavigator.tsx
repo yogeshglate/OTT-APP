@@ -1,5 +1,5 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Landing, Login, SignUp } from 'screens';
+import { Details, Landing, Login, SignUp } from 'screens';
 import React from 'react';
 import TabNavigator from './TabNavigator';
 import { RootStackParamList } from 'types';
@@ -21,6 +21,7 @@ const AuthStack = () => {
       />
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="SignUp" component={SignUp} />
+      <Stack.Screen name="Detail" component={Details} />
     </Stack.Navigator>
   );
 };
