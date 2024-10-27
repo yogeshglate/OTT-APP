@@ -12,7 +12,9 @@ export const useFetchMovies = (category: string) => {
 
   useEffect(() => {
     const fetchMovies = async () => {
-      if (!hasMore) return;
+      if (!hasMore) {
+        return;
+      }
 
       setLoading(true);
       try {
@@ -37,7 +39,7 @@ export const useFetchMovies = (category: string) => {
     };
 
     fetchMovies();
-  }, [category, page]);
+  }, [category, page, hasMore]);
 
   const loadMore = () => {
     if (hasMore) {

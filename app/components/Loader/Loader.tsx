@@ -1,13 +1,16 @@
+import { colors } from 'constant';
 import React from 'react';
 import { ActivityIndicator, View, StyleSheet, Text } from 'react-native';
 
 const Loader = ({ isLoading }: { isLoading: boolean }) => {
-  if (!isLoading) return null;
+  if (!isLoading) {
+    return null;
+  }
 
   return (
     <View style={styles.loaderContainer}>
       <ActivityIndicator size="large" color="#00ff00" />
-      <Text style={{ color: '#00ff00' }}>Please Wait...</Text>
+      <Text style={{ color: colors.light.primary }}>Please Wait...</Text>
     </View>
   );
 };

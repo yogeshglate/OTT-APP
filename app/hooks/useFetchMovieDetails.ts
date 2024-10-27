@@ -26,7 +26,7 @@ export const useFetchMovieDetails = (id: string) => {
     };
 
     fetchMovieDetails();
-  }, [id]);
+  }, [id, t]);
 
   return { movieDetails, loading };
 };

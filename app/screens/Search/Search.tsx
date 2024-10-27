@@ -60,7 +60,7 @@ const Search: React.FC = () => {
       showsVerticalScrollIndicator={false}
       onEndReachedThreshold={0.5}
       onEndReached={() => {
-        if (hasMore) loadMore();
+        if (hasMore) {loadMore();}
       }}
       ListFooterComponent={
         loading && hasMore ? (

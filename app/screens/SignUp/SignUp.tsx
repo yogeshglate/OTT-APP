@@ -93,15 +93,14 @@ const SignUp: React.FC = () => {
           value={credentials.email}
           onChangeText={text => {
             setCredentials(prev => ({ ...prev, email: text }));
-            if (errors.email && validateEmail(text))
+            if (errors.email && validateEmail(text)) {
               setErrors(prev => ({ ...prev, email: '' }));
+            }
           }}
           themeColors={themeColors}
           keyboardType="email-address"
         />
-        {errors.email && (
-          <Text style={{ color: 'red', marginTop: 5 }}>{errors.email}</Text>
-        )}
+        {errors.email && <Text style={styles.errorText}>{errors.email}</Text>}
       </View>
 
       <View style={styles.inputContainer}>
@@ -111,13 +110,14 @@ const SignUp: React.FC = () => {
           value={credentials.username}
           onChangeText={text => {
             setCredentials(prev => ({ ...prev, username: text }));
-            if (errors.username && text.length > 0)
+            if (errors.username && text.length > 0) {
               setErrors(prev => ({ ...prev, username: '' }));
+            }
           }}
           themeColors={themeColors}
         />
         {errors.username && (
-          <Text style={{ color: 'red', marginTop: 5 }}>{errors.username}</Text>
+          <Text style={styles.errorText}>{errors.username}</Text>
         )}
       </View>
 
@@ -128,8 +128,9 @@ const SignUp: React.FC = () => {
           value={credentials.password}
           onChangeText={text => {
             setCredentials(prev => ({ ...prev, password: text }));
-            if (errors.password && text.length >= 6)
+            if (errors.password && text.length >= 6) {
               setErrors(prev => ({ ...prev, password: '' }));
+            }
           }}
           secureTextEntry={!passwordVisible}
           right={
@@ -147,7 +148,7 @@ const SignUp: React.FC = () => {
           themeColors={themeColors}
         />
         {errors.password && (
-          <Text style={{ color: 'red', marginTop: 5 }}>{errors.password}</Text>
+          <Text style={styles.errorText}>{errors.password}</Text>
         )}
       </View>
 

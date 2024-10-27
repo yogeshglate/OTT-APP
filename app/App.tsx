@@ -6,7 +6,6 @@ import 'intl-pluralrules';
 import { AuthNavigator } from 'navigation';
 import React, { createContext } from 'react';
 import { I18nextProvider } from 'react-i18next';
-import { StyleSheet } from 'react-native';
 import Toast from 'react-native-toast-message';
 import { i18n } from 'services';
 import { ThemeContextType } from 'types';
@@ -37,14 +36,6 @@ const AppContent = () => {
     </ThemeContext.Provider>
   );
 };
-
-const styles = StyleSheet.create({
-  loadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
 
 const App = () => {
   return <AppContent />;

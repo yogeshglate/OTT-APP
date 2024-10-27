@@ -98,9 +98,7 @@ const Login: React.FC = () => {
           }}
           themeColors={themeColors}
         />
-        {errors.email && (
-          <Text style={{ color: 'red', marginTop: 5 }}>{errors.email}</Text>
-        )}
+        {errors.email && <Text style={styles.errorText}>{errors.email}</Text>}
       </View>
 
       <View style={styles.inputContainer}>
@@ -130,7 +128,7 @@ const Login: React.FC = () => {
           themeColors={themeColors}
         />
         {errors.password && (
-          <Text style={{ color: 'red', marginTop: 5 }}>{errors.password}</Text>
+          <Text style={styles.errorText}>{errors.password}</Text>
         )}
       </View>
 
