@@ -58,7 +58,7 @@ const Login: React.FC = () => {
   };
 
   const handleLogin = async () => {
-    setErrors({ email: '', password: '' }); // Clear previous errors
+    setErrors({ email: '', password: '' });
     if (validateInputs()) {
       const isLoggedIn = await login(credentials.email, credentials.password);
       if (isLoggedIn) {
@@ -76,8 +76,8 @@ const Login: React.FC = () => {
 
   useFocusEffect(
     useCallback(() => {
-      setCredentials({ email: '', password: '' }); // Reset fields on focus
-      setErrors({ email: '', password: '' }); // Clear errors on focus
+      setCredentials({ email: '', password: '' });
+      setErrors({ email: '', password: '' });
     }, []),
   );
 
@@ -110,7 +110,7 @@ const Login: React.FC = () => {
           value={credentials.password}
           onChangeText={text => {
             setCredentials(prev => ({ ...prev, password: text }));
-            if (errors.password && text.length >= 6) {
+            if (errors.password && validatePassword(text)) {
               setErrors(prev => ({ ...prev, password: '' }));
             }
           }}
