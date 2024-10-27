@@ -1,79 +1,129 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# OTT_APP 🎥
 
-# Getting Started
+An OTT (Over-the-Top) movie application built with React Native, using [TMDB API](https://www.themoviedb.org/) to display popular movies. This app offers key features such as navigation, pagination, responsive design, dark/light theme toggle, i18n for multilingual support, and local storage for favorite movies. It's optimized for both Android and iOS platforms, with clean, readable code adhering to best practices.
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+## Key Features
 
-## Step 1: Start the Metro Server
+- **Home Screen**: Displays a list of popular movies, each with:
+  - Movie poster
+  - Title
+  - Release date
+  - Rating
+  - Genres (categories)
+- **Detail Screen**: On movie selection, users can view:
+  - Movie poster
+  - Title
+  - Overview
+  - Release date
+  - Rating
+  - Categories (genres)
+  - Navigation button to return to the Home Screen
+- **Search**: Search functionality with pagination.
+- **Favorites**: Save favorite movies locally to view in the Favorites screen (optional).
+- **Settings**:
+  - Toggle between Dark and Light themes
+  - Access help
+- **Account** (Optional): Authentication to save user preferences locally.
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
+## Bonus Features
 
-To start Metro, run the following command from the _root_ of your React Native project:
+- **Pagination** for movie listings.
+- **Dark/Light Theme Toggle**.
+- **i18n**: Supports multiple languages.
+- **Online/Offline Detection** using `@react-native-community/netinfo`.
+- **Error Handling** for a seamless user experience.
 
-```bash
-# using npm
-npm start
+## Installation
 
-# OR using Yarn
-yarn start
+1. **Clone the repository**:
+
+   ```bash
+   git clone https://github.com/yogeshglate/OTT-APP.git
+   cd OTT-APP
+   ```
+
+2. **Install dependencies**:
+
+   ```bash
+   npm install
+   ```
+
+3. **Set up the TMDB API Key**: Create a `.env` file in the root directory and add your TMDB API variables:
+
+   ```plaintext
+   API_KEY=your_api_key_here
+   API_BASE_URL=https://api.themoviedb.org/3/movie/
+   ```
+
+4. **Run the app**:
+
+   ```bash
+   npm run android  # For Android
+   npm run ios      # For iOS
+   ```
+
+## Available Scripts
+
+- **`npm run android`**: Runs the app on Android.
+- **`npm run ios`**: Runs the app on iOS.
+- **`npm run lint`**: Lints code using ESLint.
+- **`npm start`**: Starts the React Native development server.
+- **`npm test`**: Runs unit tests with Jest.
+
+## Project Structure
+
+```
+OTT_APP/
+├── assets/               # Images and other assets
+├── components/           # Reusable UI components (e.g., MovieCard, InputField)
+├── constants/            # Constant values used throughout the app
+├── context/              # Context providers (e.g., Theme, Auth)
+├── hooks/                # Custom hooks for state management
+├── locales/              # Localization files for i18n
+├── navigation/           # Navigation stack configuration
+├── screens/              # App screens (HomeScreen, DetailScreen, SearchScreen, etc.)
+├── services/             # API calls and helper functions
+├── styles/               # Styling configurations (e.g., ThemeStyles, ButtonStyles)
+├── types/                # Type definitions (if using TypeScript)
+├── utils/                # Utility functions
+├── .env                  # Environment variables
+└── README.md             # Project documentation
 ```
 
-## Step 2: Start your Application
+## Dependencies
 
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
+- **Core Libraries**:
+  - `react-native`: Framework for building cross-platform mobile apps.
+  - `react`: For building user interfaces.
+- **State Management**:
+  - **Context API**: Manages global state (no Redux).
+  - `@react-native-async-storage/async-storage`: Local storage for saving favorites.
+- **Navigation**:
+  - `@react-navigation/native` and `@react-navigation/native-stack`: For managing navigation.
+  - `@react-navigation/bottom-tabs`: For bottom tab navigation.
+- **UI Components & Styling**:
+  - `react-native-paper`: Provides Material Design components.
+  - `react-native-vector-icons`: Custom icons throughout the app.
+- **i18n & Localization**:
+  - `i18next` and `react-i18next`: For internationalization.
+  - `intl-pluralrules`: Ensures accurate pluralization in different languages.
+- **Utility & Misc**:
+  - `@react-native-community/netinfo`: For online/offline connectivity status.
+  - `axios`: For making HTTP requests to the TMDB API.
+  - `react-native-toast-message`: For displaying user notifications.
+  - `react-native-config`: Manages environment variables.
 
-### For Android
+## Development
 
-```bash
-# using npm
-npm run android
+### Linting & Formatting
 
-# OR using Yarn
-yarn android
-```
+- **ESLint**: Run `npm run lint` to identify and fix code quality issues.
+- **Prettier**: For code formatting.
 
-### For iOS
+## Contributing
 
-```bash
-# using npm
-npm run ios
+Contributions are welcome! Please open a pull request with your suggested changes.
 
-# OR using Yarn
-yarn ios
-```
+## License
 
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
-
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
-
-## Step 3: Modifying your App
-
-Now that you have successfully run the app, let's modify it.
-
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
-
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+This project is licensed under the MIT License. See the [LICENSE.md](LICENSE.md) file for details.
