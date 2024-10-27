@@ -1,24 +1,33 @@
 import { useFocusEffect } from '@react-navigation/native';
 import { ThemeContext } from 'app';
-import { Button } from 'components';
+import { Button, InputField } from 'components';
 import { AppIcons } from 'constant';
 import { useAuth, useNavigation } from 'hooks';
 import React, { useCallback, useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Keyboard, Pressable, Text, View } from 'react-native';
 import { TextInput } from 'react-native-paper';
-import { showError, showSuccess } from 'services';
+import {
+  showError,
+  showSuccess,
+  validateEmail,
+  validatePassword,
+} from 'services';
+import { SignUpCredentials } from 'types';
 import getStyles from './SignUpStyles';
 
 const SignUp: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordVisible, setPasswordVisible] = useState(false);
-
-  const [emailError, setEmailError] = useState('');
-  const [usernameError, setUsernameError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
+  const [credentials, setCredentials] = useState<SignUpCredentials>({
+    email: '',
+    username: '',
+    password: '',
+  });
+  const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
+  const [errors, setErrors] = useState<SignUpCredentials>({
+    email: '',
+    username: '',
+    password: '',
+  });
 
   const { navigation } = useNavigation();
   const { register } = useAuth();
@@ -30,40 +39,34 @@ const SignUp: React.FC = () => {
     navigation.navigate('Login');
   };
 
-  const validateEmail = (email: string) =>
-    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-
   const handleSignUp = async () => {
-    setEmailError('');
-    setUsernameError('');
-    setPasswordError('');
-
+    setErrors({ email: '', username: '', password: '' });
     let isValid = true;
 
-    if (!email) {
-      setEmailError(t('EMAIL_REQUIRED_ERROR'));
+    if (!credentials.email) {
+      setErrors(prev => ({ ...prev, email: t('EMAIL_REQUIRED_ERROR') }));
       isValid = false;
-    } else if (!validateEmail(email)) {
-      setEmailError(t('EMAIL_INVALID_ERROR'));
-      isValid = false;
-    }
-
-    if (!username) {
-      setUsernameError(t('USERNAME_REQUIRED_ERROR'));
+    } else if (!validateEmail(credentials.email)) {
+      setErrors(prev => ({ ...prev, email: t('EMAIL_INVALID_ERROR') }));
       isValid = false;
     }
 
-    if (!password) {
-      setPasswordError(t('PASSWORD_REQUIRED_ERROR'));
+    if (!credentials.username) {
+      setErrors(prev => ({ ...prev, username: t('USERNAME_REQUIRED_ERROR') }));
       isValid = false;
-    } else if (password.length < 6) {
-      setPasswordError(t('PASSWORD_LENGTH_ERROR'));
+    }
+
+    if (!credentials.password) {
+      setErrors(prev => ({ ...prev, password: t('PASSWORD_REQUIRED_ERROR') }));
+      isValid = false;
+    } else if (!validatePassword(credentials.password)) {
+      setErrors(prev => ({ ...prev, password: t('PASSWORD_LENGTH_ERROR') }));
       isValid = false;
     }
 
     if (isValid) {
       try {
-        await register({ email, username, password });
+        await register(credentials);
         navigation.navigate('Login');
         showSuccess(t('SIGNUP_SUCCESS'));
       } catch (error) {
@@ -74,12 +77,8 @@ const SignUp: React.FC = () => {
 
   useFocusEffect(
     useCallback(() => {
-      setEmail('');
-      setUsername('');
-      setPassword('');
-      setEmailError('');
-      setUsernameError('');
-      setPasswordError('');
+      setCredentials({ email: '', username: '', password: '' });
+      setErrors({ email: '', username: '', password: '' });
     }, []),
   );
 
@@ -88,83 +87,51 @@ const SignUp: React.FC = () => {
       <Text style={styles.signupTitle}>{t('SIGNUP_LINK_TEXT')}</Text>
 
       <View style={styles.inputContainer}>
-        <TextInput
-          mode="outlined"
+        <InputField
           label={t('EMAIL_LABEL')}
-          value={email}
+          icon={AppIcons.Email}
+          value={credentials.email}
           onChangeText={text => {
-            setEmail(text);
-            if (emailError && validateEmail(text)) setEmailError('');
+            setCredentials(prev => ({ ...prev, email: text }));
+            if (errors.email && validateEmail(text))
+              setErrors(prev => ({ ...prev, email: '' }));
           }}
-          left={
-            <TextInput.Icon
-              icon={AppIcons.Email}
-              size={30}
-              color={themeColors?.primary}
-            />
-          }
-          style={styles.input}
+          themeColors={themeColors}
           keyboardType="email-address"
-          outlineColor={themeColors?.outlineColor}
-          activeOutlineColor={themeColors?.primary}
-          textColor={themeColors?.text}
-          theme={{
-            colors: {
-              text: themeColors?.text,
-              placeholder: themeColors?.placeholder,
-            },
-          }}
         />
-        {emailError && <Text style={styles.errorText}>{emailError}</Text>}
+        {errors.email && (
+          <Text style={{ color: 'red', marginTop: 5 }}>{errors.email}</Text>
+        )}
       </View>
 
       <View style={styles.inputContainer}>
-        <TextInput
-          mode="outlined"
+        <InputField
           label={t('USERNAME_LABEL')}
-          value={username}
+          icon={AppIcons.UserName}
+          value={credentials.username}
           onChangeText={text => {
-            setUsername(text);
-            if (usernameError && text.length > 0) setUsernameError('');
+            setCredentials(prev => ({ ...prev, username: text }));
+            if (errors.username && text.length > 0)
+              setErrors(prev => ({ ...prev, username: '' }));
           }}
-          left={
-            <TextInput.Icon
-              icon={AppIcons.UserName}
-              size={30}
-              color={themeColors?.primary}
-            />
-          }
-          style={styles.input}
-          outlineColor={themeColors?.outlineColor}
-          activeOutlineColor={themeColors?.primary}
-          textColor={themeColors?.text}
-          theme={{
-            colors: {
-              text: themeColors?.text,
-              placeholder: themeColors?.placeholder,
-            },
-          }}
+          themeColors={themeColors}
         />
-        {usernameError && <Text style={styles.errorText}>{usernameError}</Text>}
+        {errors.username && (
+          <Text style={{ color: 'red', marginTop: 5 }}>{errors.username}</Text>
+        )}
       </View>
 
       <View style={styles.inputContainer}>
-        <TextInput
-          mode="outlined"
-          label="Password"
-          value={password}
+        <InputField
+          label={t('PASSWORD_LABEL')}
+          icon={AppIcons.Password}
+          value={credentials.password}
           onChangeText={text => {
-            setPassword(text);
-            if (passwordError && text.length >= 6) setPasswordError('');
+            setCredentials(prev => ({ ...prev, password: text }));
+            if (errors.password && text.length >= 6)
+              setErrors(prev => ({ ...prev, password: '' }));
           }}
           secureTextEntry={!passwordVisible}
-          left={
-            <TextInput.Icon
-              icon={AppIcons.Password}
-              size={30}
-              color={themeColors?.primary}
-            />
-          }
           right={
             <TextInput.Icon
               icon={
@@ -177,18 +144,11 @@ const SignUp: React.FC = () => {
               onPress={() => setPasswordVisible(prev => !prev)}
             />
           }
-          style={styles.input}
-          outlineColor={themeColors?.outlineColor}
-          activeOutlineColor={themeColors?.primary}
-          textColor={themeColors?.text}
-          theme={{
-            colors: {
-              text: themeColors?.text,
-              placeholder: themeColors?.placeholder,
-            },
-          }}
+          themeColors={themeColors}
         />
-        {passwordError && <Text style={styles.errorText}>{passwordError}</Text>}
+        {errors.password && (
+          <Text style={{ color: 'red', marginTop: 5 }}>{errors.password}</Text>
+        )}
       </View>
 
       <Button

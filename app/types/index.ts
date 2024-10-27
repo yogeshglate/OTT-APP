@@ -1,5 +1,6 @@
-import { GestureResponderEvent } from 'react-native';
 import { colors } from 'constant';
+import { GestureResponderEvent } from 'react-native';
+import { TextInputProps } from 'react-native-paper';
 
 export interface ButtonProps {
   text: string;
@@ -72,3 +73,18 @@ export type ToastOptions = {
 };
 
 export type ThemeColors = typeof colors.light;
+
+export interface Credentials {
+  email: string;
+  password: string;
+}
+
+export interface SignUpCredentials extends Credentials {
+  username: string;
+}
+
+export interface InputFieldProps extends TextInputProps {
+  label: string;
+  icon: string;
+  themeColors?: ThemeColors;
+}

@@ -1,8 +1,9 @@
+import { useFocusEffect } from '@react-navigation/native';
 import { ThemeContext } from 'app';
-import { Button } from 'components';
-import { AppIcons } from 'constant'; // Import AppConstants
+import { Button, InputField } from 'components';
+import { AppIcons } from 'constant';
 import { useAuth, useNavigation } from 'hooks';
-import React, { useState } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Keyboard, Pressable, Text, View } from 'react-native';
 import { TextInput } from 'react-native-paper';
@@ -12,50 +13,54 @@ import {
   validateEmail,
   validatePassword,
 } from 'services';
+import { Credentials } from 'types';
 import getStyles from './LoginStyles';
 
-const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordVisible, setPasswordVisible] = useState(false);
+const Login: React.FC = () => {
+  const [credentials, setCredentials] = useState<Credentials>({
+    email: '',
+    password: '',
+  });
+  const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
+  const [errors, setErrors] = useState<Credentials>({
+    email: '',
+    password: '',
+  });
 
-  const [emailError, setEmailError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
-
-  const { navigation, useFocusEffect } = useNavigation();
-  const { themeColors } = React.useContext(ThemeContext) || {};
+  const { navigation } = useNavigation();
+  const { themeColors } = useContext(ThemeContext) || {};
   const styles = getStyles(themeColors);
   const { login } = useAuth();
   const { t } = useTranslation();
 
-  const handleSignUpPress = () => {
-    navigation.navigate('SignUp');
-  };
-
-  const handleLoginPress = async () => {
-    setEmailError('');
-    setPasswordError('');
-
+  const validateInputs = (): boolean => {
+    const newErrors: Credentials = { email: '', password: '' };
     let isValid = true;
 
-    if (!email) {
-      setEmailError(t('EMAIL_REQUIRED_ERROR'));
+    if (!credentials.email) {
+      newErrors.email = t('EMAIL_REQUIRED_ERROR');
       isValid = false;
-    } else if (!validateEmail(email)) {
-      setEmailError(t('EMAIL_INVALID_ERROR'));
-      isValid = false;
-    }
-
-    if (!password) {
-      setPasswordError(t('PASSWORD_REQUIRED_ERROR'));
-      isValid = false;
-    } else if (validatePassword(password)) {
-      setPasswordError(t('PASSWORD_LENGTH_ERROR'));
+    } else if (!validateEmail(credentials.email)) {
+      newErrors.email = t('EMAIL_INVALID_ERROR');
       isValid = false;
     }
 
-    if (isValid) {
-      const isLoggedIn = await login(email, password);
+    if (!credentials.password) {
+      newErrors.password = t('PASSWORD_REQUIRED_ERROR');
+      isValid = false;
+    } else if (!validatePassword(credentials.password)) {
+      newErrors.password = t('PASSWORD_LENGTH_ERROR');
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
+  };
+
+  const handleLogin = async () => {
+    setErrors({ email: '', password: '' }); // Clear previous errors
+    if (validateInputs()) {
+      const isLoggedIn = await login(credentials.email, credentials.password);
       if (isLoggedIn) {
         navigation.replace('HomeTab');
         showSuccess(t('LOGIN_SUCCESS_MESSAGE'));
@@ -65,72 +70,51 @@ const Login = () => {
     }
   };
 
+  const handleSignUpPress = useCallback(() => {
+    navigation.navigate('SignUp');
+  }, [navigation]);
+
   useFocusEffect(
-    React.useCallback(() => {
-      setEmail('');
-      setPassword('');
-      setEmailError('');
-      setPasswordError('');
+    useCallback(() => {
+      setCredentials({ email: '', password: '' }); // Reset fields on focus
+      setErrors({ email: '', password: '' }); // Clear errors on focus
     }, []),
   );
 
   return (
     <Pressable style={styles.login} onPress={Keyboard.dismiss}>
-      <Text style={[styles.loginTitle, { color: themeColors?.text }]}>
-        {t('LOGIN_TITLE')}
-      </Text>
+      <Text style={styles.loginTitle}>{t('LOGIN_TITLE')}</Text>
 
       <View style={styles.inputContainer}>
-        <TextInput
-          mode="outlined"
+        <InputField
           label={t('EMAIL_LABEL')}
-          value={email}
+          icon={AppIcons.Email}
+          value={credentials.email}
           onChangeText={text => {
-            setEmail(text);
-            if (emailError && validateEmail(text)) {
-              setEmailError('');
+            setCredentials(prev => ({ ...prev, email: text }));
+            if (errors.email && validateEmail(text)) {
+              setErrors(prev => ({ ...prev, email: '' }));
             }
           }}
-          left={
-            <TextInput.Icon
-              icon={AppIcons.Email}
-              size={30}
-              color={themeColors?.primary}
-            />
-          }
-          style={styles.input}
-          outlineColor={themeColors?.outlineColor}
-          activeOutlineColor={themeColors?.primary}
-          textColor={themeColors?.text}
-          theme={{
-            colors: {
-              text: themeColors?.text,
-              placeholder: themeColors?.placeholder,
-            },
-          }}
+          themeColors={themeColors}
         />
-        {emailError ? <Text style={styles.errorText}>{emailError}</Text> : null}
+        {errors.email && (
+          <Text style={{ color: 'red', marginTop: 5 }}>{errors.email}</Text>
+        )}
       </View>
 
       <View style={styles.inputContainer}>
-        <TextInput
-          mode="outlined"
+        <InputField
           label={t('PASSWORD_LABEL')}
-          value={password}
+          icon={AppIcons.Password}
+          value={credentials.password}
           onChangeText={text => {
-            setPassword(text);
-            if (passwordError && text.length >= 6) {
-              setPasswordError('');
+            setCredentials(prev => ({ ...prev, password: text }));
+            if (errors.password && text.length >= 6) {
+              setErrors(prev => ({ ...prev, password: '' }));
             }
           }}
           secureTextEntry={!passwordVisible}
-          left={
-            <TextInput.Icon
-              icon={AppIcons.Password}
-              size={30}
-              color={themeColors?.primary}
-            />
-          }
           right={
             <TextInput.Icon
               icon={
@@ -139,31 +123,18 @@ const Login = () => {
                   : AppIcons.PasswordVisible
               }
               size={30}
-              color={themeColors?.text}
+              color={themeColors?.secondary}
               onPress={() => setPasswordVisible(prev => !prev)}
             />
           }
-          style={styles.input}
-          outlineColor={themeColors?.outlineColor}
-          activeOutlineColor={themeColors?.primary}
-          textColor={themeColors?.text}
-          theme={{
-            colors: {
-              text: themeColors?.text,
-              placeholder: themeColors?.placeholder,
-            },
-          }}
+          themeColors={themeColors}
         />
-        {passwordError ? (
-          <Text style={styles.errorText}>{passwordError}</Text>
-        ) : null}
+        {errors.password && (
+          <Text style={{ color: 'red', marginTop: 5 }}>{errors.password}</Text>
+        )}
       </View>
 
-      <Button
-        text={t('LOGIN_TITLE')}
-        onPress={handleLoginPress}
-        type="contained"
-      />
+      <Button text={t('LOGIN_TITLE')} onPress={handleLogin} type="contained" />
 
       <View style={styles.signupContainer}>
         <Text style={styles.signupText}>{t('SIGNUP_PROMPT')}</Text>
