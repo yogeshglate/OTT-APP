@@ -6,11 +6,11 @@ import { useTranslation } from 'react-i18next';
 import { Pressable, Text, View } from 'react-native';
 import { Menu, Provider } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { showError } from 'services';
+import { showError, showSuccess } from 'services';
 import getStyles from './SettingsStyles';
 
 const Settings: React.FC = () => {
-  const { themeColors, isDarkMode, toggleTheme } =
+  const { themeColors, isDarkMode, toggleTheme, user } =
     React.useContext(ThemeContext) || {};
   const styles = getStyles(themeColors);
   const { navigation } = useNavigation();
@@ -22,8 +22,8 @@ const Settings: React.FC = () => {
   const handleLogout = async () => {
     try {
       await logout();
-      showError(t('USER_LOGGED_OUT_SUCCESS'));
-      navigation.navigate('Landing');
+      showSuccess(t('USER_LOGGED_OUT_SUCCESS'));
+      navigation.replace('Landing');
     } catch {
       showError(t('LOGOUT_ERROR'));
     }
@@ -58,8 +58,8 @@ const Settings: React.FC = () => {
             color={themeColors?.text}
           />
           <View style={styles.worlderParent}>
-            <Text style={styles.worlder}>{t('PROFILE_NAME')}</Text>
-            <Text style={styles.worlderEmail}>{t('PROFILE_EMAIL')}</Text>
+            <Text style={styles.worlder}>{user?.username}</Text>
+            <Text style={styles.worlderEmail}>{user?.email}</Text>
           </View>
         </View>
 

@@ -1,13 +1,13 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Details, Landing, Login, SignUp } from 'screens';
+import { ThemeContext } from 'app';
 import React from 'react';
-import TabNavigator from './TabNavigator';
+import { Details, Landing, Login, SignUp } from 'screens';
 import { RootStackParamList } from 'types';
-import { useAuth } from 'hooks';
+import TabNavigator from './TabNavigator';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const AuthStack = () => {
-  const { user } = useAuth();
+  const { user } = React.useContext(ThemeContext) || {};
 
   return (
     <Stack.Navigator

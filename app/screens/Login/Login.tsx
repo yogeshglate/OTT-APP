@@ -6,8 +6,13 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Keyboard, Pressable, Text, View } from 'react-native';
 import { TextInput } from 'react-native-paper';
+import {
+  showError,
+  showSuccess,
+  validateEmail,
+  validatePassword,
+} from 'services';
 import getStyles from './LoginStyles';
-import { showError, showSuccess } from 'services';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -27,11 +32,6 @@ const Login = () => {
     navigation.navigate('SignUp');
   };
 
-  const validateEmail = (email: string) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
-
   const handleLoginPress = async () => {
     setEmailError('');
     setPasswordError('');
@@ -49,7 +49,7 @@ const Login = () => {
     if (!password) {
       setPasswordError(t('PASSWORD_REQUIRED_ERROR'));
       isValid = false;
-    } else if (password.length < 6) {
+    } else if (validatePassword(password)) {
       setPasswordError(t('PASSWORD_LENGTH_ERROR'));
       isValid = false;
     }
@@ -57,7 +57,7 @@ const Login = () => {
     if (isValid) {
       const isLoggedIn = await login(email, password);
       if (isLoggedIn) {
-        navigation.navigate('HomeTab');
+        navigation.replace('HomeTab');
         showSuccess(t('LOGIN_SUCCESS_MESSAGE'));
       } else {
         showError(t('LOGIN_FAILURE_MESSAGE'));

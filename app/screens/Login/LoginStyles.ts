@@ -1,7 +1,4 @@
 import { StyleSheet } from 'react-native';
-
-const styles = StyleSheet.create({});
-
 import { ThemeColors } from 'types';
 
 const getStyles = (themeColors?: ThemeColors) =>

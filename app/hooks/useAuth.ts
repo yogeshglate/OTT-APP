@@ -4,6 +4,7 @@ import { User } from 'types';
 
 export const useAuth = () => {
   const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
 
   const login = async (email: string, password: string) => {
     const storedUser = await AsyncStorage.getItem('user');
@@ -29,16 +30,18 @@ export const useAuth = () => {
   const logout = async () => {
     setUser(null);
   };
+
   const loadUser = async () => {
     const storedUser = await AsyncStorage.getItem('user');
     if (storedUser) {
       setUser(JSON.parse(storedUser));
     }
+    setLoading(false);
   };
 
   useEffect(() => {
     loadUser();
   }, []);
 
-  return { user, login, register, logout, loadUser };
+  return { user, loading, login, register, logout, loadUser };
 };
