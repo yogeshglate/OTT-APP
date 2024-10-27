@@ -17,7 +17,7 @@ const AppContent = () => {
   const themeColors = isDarkMode ? colors.dark : colors.light;
   const toggleTheme = (isDark: boolean) => setColorTheme(isDark);
 
-  const { user, loading } = useAuth();
+  const { user, loading, loadUser } = useAuth();
   const isConnected = useNetworkStatus();
 
   if (loading) {
@@ -26,7 +26,7 @@ const AppContent = () => {
 
   return (
     <ThemeContext.Provider
-      value={{ isDarkMode, themeColors, toggleTheme, user }}>
+      value={{ isDarkMode, themeColors, toggleTheme, user, loadUser }}>
       <I18nextProvider i18n={i18n}>
         <NavigationContainer>
           {isConnected ? <AuthNavigator /> : <NoInternet />}

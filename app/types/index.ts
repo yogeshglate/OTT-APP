@@ -31,6 +31,7 @@ export type ThemeContextType = {
   themeColors: typeof colors.light;
   toggleTheme: (isDark: boolean) => void;
   user: User | null;
+  loadUser: () => Promise<void>;
 } | null;
 
 export interface Movie {

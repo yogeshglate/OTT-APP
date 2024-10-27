@@ -1,3 +1,4 @@
+import { useFocusEffect } from '@react-navigation/native';
 import { ThemeContext } from 'app';
 import { AppIcons } from 'constant';
 import { useAuth, useNavigation } from 'hooks';
@@ -10,7 +11,7 @@ import { showError, showSuccess } from 'services';
 import getStyles from './SettingsStyles';
 
 const Settings: React.FC = () => {
-  const { themeColors, isDarkMode, toggleTheme, user } =
+  const { themeColors, isDarkMode, toggleTheme, user, loadUser } =
     React.useContext(ThemeContext) || {};
   const styles = getStyles(themeColors);
   const { navigation } = useNavigation();
@@ -18,6 +19,17 @@ const Settings: React.FC = () => {
   const { t, i18n } = useTranslation();
 
   const [visible, setVisible] = React.useState(false);
+
+  const hasLoadedUser = React.useRef(false);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      if (!hasLoadedUser.current && loadUser) {
+        loadUser();
+        hasLoadedUser.current = true;
+      }
+    }, [loadUser]),
+  );
 
   const handleLogout = async () => {
     try {
