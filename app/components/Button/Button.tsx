@@ -1,6 +1,7 @@
 import { ButtonProps } from 'types';
 import React from 'react';
 import { Pressable, StyleSheet, Text } from 'react-native';
+import { fontSize, moderateScale, scale, verticalScale } from 'services';
 
 const Button: React.FC<ButtonProps> = ({
   text,
@@ -26,21 +27,21 @@ const Button: React.FC<ButtonProps> = ({
 
 const styles = StyleSheet.create({
   button: {
-    paddingVertical: 12,
-    paddingHorizontal: 32,
+    paddingVertical: verticalScale(12),
+    paddingHorizontal: scale(32),
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 4,
+    borderRadius: moderateScale(4),
     width: '100%',
-    marginVertical: 10,
+    marginVertical: verticalScale(10),
   },
   containedButton: {
     backgroundColor: '#32a873',
     shadowColor: 'rgba(50, 168, 115, 0.4)',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 1,
-    shadowRadius: 8,
-    elevation: 8,
+    shadowRadius: moderateScale(8),
+    elevation: moderateScale(8),
   },
   outlinedButton: {
     borderWidth: 1,
@@ -52,12 +53,12 @@ const styles = StyleSheet.create({
   containedText: {
     color: '#121212',
     fontWeight: '700',
-    fontSize: 16,
+    fontSize: fontSize.medium,
   },
   outlinedText: {
     color: '#32a873',
     fontWeight: '700',
-    fontSize: 16,
+    fontSize: fontSize.medium,
   },
 });
 

@@ -1,4 +1,5 @@
 import { StyleSheet, Dimensions } from 'react-native';
+import { moderateScale, scale, verticalScale } from 'services';
 
 const { height } = Dimensions.get('window');
 
@@ -15,12 +16,12 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     backgroundColor: 'rgba(18, 18, 18, 0.9)',
-    padding: 16,
-    paddingBottom: 40,
+    padding: moderateScale(16),
+    paddingBottom: verticalScale(40),
     alignItems: 'center',
     width: '100%',
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
+    borderTopLeftRadius: scale(10),
+    borderTopRightRadius: scale(10),
   },
 });
 

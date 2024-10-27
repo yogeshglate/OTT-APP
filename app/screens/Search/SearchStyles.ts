@@ -1,59 +1,60 @@
 import { StyleSheet } from 'react-native';
+import { fontSize, moderateScale, scale, verticalScale } from 'services';
 import { ThemeColors } from 'types';
 
 const getStyles = (themeColors?: ThemeColors) =>
   StyleSheet.create({
     container: {
       flex: 1,
-      padding: 16,
+      padding: moderateScale(16),
       backgroundColor: themeColors?.background,
     },
     appBar: {
-      height: 56,
+      height: verticalScale(56),
       justifyContent: 'center',
       alignItems: 'center',
       borderBottomColor: themeColors?.border || 'rgba(0, 0, 0, 0.25)',
-      borderBottomWidth: 4,
+      borderBottomWidth: verticalScale(4),
       width: '100%',
     },
     title: {
       fontWeight: '700',
       fontFamily: 'Inter-Bold',
-      fontSize: 18,
+      fontSize: fontSize.largeVariant,
       color: themeColors?.text,
     },
     searchBarContainer: {
       flexDirection: 'row',
       alignItems: 'center',
-      borderRadius: 8,
-      paddingHorizontal: 8,
-      margin: 26,
+      borderRadius: moderateScale(8),
+      paddingHorizontal: scale(8),
+      margin: moderateScale(26),
       backgroundColor: themeColors?.inputBackground,
     },
     searchBar: {
       flex: 1,
-      height: 60,
-      padding: 8,
+      height: verticalScale(60),
+      padding: moderateScale(8),
       color: themeColors?.text,
     },
     movieCard: {
       flex: 1,
-      margin: 4,
+      margin: moderateScale(4),
       backgroundColor: themeColors?.background || '#222',
-      borderRadius: 8,
+      borderRadius: moderateScale(8),
       overflow: 'hidden',
     },
     movieImage: {
       width: '100%',
-      height: 150,
+      height: verticalScale(150),
     },
     movieTitle: {
-      padding: 8,
+      padding: moderateScale(8),
       textAlign: 'center',
       color: themeColors?.text,
     },
     loadingIndicator: {
-      padding: 16,
+      padding: moderateScale(16),
     },
   });
 

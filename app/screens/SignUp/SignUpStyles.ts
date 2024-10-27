@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { fontSize, moderateScale, scale, verticalScale } from 'services';
 import { ThemeColors } from 'types';
 
 const getStyles = (themeColors?: ThemeColors) =>
@@ -7,18 +8,18 @@ const getStyles = (themeColors?: ThemeColors) =>
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
-      padding: 20,
+      padding: moderateScale(20),
       backgroundColor: themeColors?.background,
     },
     signupTitle: {
-      fontSize: 24,
+      fontSize: fontSize.xLarge,
       fontFamily: 'Inter-Bold',
-      marginBottom: 30,
+      marginBottom: verticalScale(30),
       color: themeColors?.secondary,
     },
     inputContainer: {
       width: '100%',
-      marginBottom: 20,
+      marginBottom: verticalScale(20),
     },
     input: {
       backgroundColor: themeColors?.background,
@@ -26,24 +27,24 @@ const getStyles = (themeColors?: ThemeColors) =>
     loginContainer: {
       flexDirection: 'row',
       justifyContent: 'center',
-      marginTop: 20,
+      marginTop: verticalScale(20),
     },
     loginText: {
-      fontSize: 13,
+      fontSize: fontSize.small,
       fontFamily: 'Inter-Regular',
       color: themeColors?.secondary,
     },
     loginLink: {
-      fontSize: 13,
+      fontSize: fontSize.small,
       fontFamily: 'Inter-Regular',
-      marginLeft: 5,
+      marginLeft: scale(5),
       color: themeColors?.signupLink,
       textDecorationLine: 'none',
     },
     errorText: {
       color: 'red',
-      fontSize: 14,
-      marginTop: 5,
+      fontSize: fontSize.smallVariant,
+      marginTop: verticalScale(5),
       textAlign: 'left',
     },
   });

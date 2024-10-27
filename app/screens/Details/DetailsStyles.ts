@@ -1,18 +1,19 @@
 import { StyleSheet } from 'react-native';
+import { fontSize, moderateScale, scale, verticalScale } from 'services';
 import { ThemeColors } from 'types';
 
 export const getStyles = (themeColors?: ThemeColors) =>
   StyleSheet.create({
     container: {
       flex: 1,
-      paddingTop: 20,
+      paddingTop: verticalScale(20),
       backgroundColor: themeColors?.background || '#121212',
     },
     appBar: {
-      height: 56,
+      height: verticalScale(56),
       flexDirection: 'row',
       alignItems: 'center',
-      paddingHorizontal: 16,
+      paddingHorizontal: scale(16),
       borderBottomColor: themeColors?.border || 'rgba(0, 0, 0, 0.25)',
       borderBottomWidth: 4,
       width: '100%',
@@ -23,43 +24,43 @@ export const getStyles = (themeColors?: ThemeColors) =>
       textAlign: 'center',
       fontWeight: '700',
       fontFamily: 'Inter-Bold',
-      fontSize: 18,
+      fontSize: fontSize.largeVariant,
       color: themeColors?.text,
     },
     bannerImage: {
       width: '100%',
-      height: 200,
+      height: verticalScale(200),
       resizeMode: 'cover',
     },
     detailsContainer: {
-      padding: 15,
+      padding: moderateScale(15),
       backgroundColor: themeColors?.background || '#121212',
     },
     showTitle: {
-      fontSize: 24,
+      fontSize: fontSize.xLarge,
       fontWeight: 'bold',
       fontFamily: 'Inter-Bold',
       color: themeColors?.text || '#ffffff',
-      marginBottom: 5,
+      marginBottom: verticalScale(5),
     },
     showInfo: {
-      fontSize: 14,
+      fontSize: fontSize.smallVariant,
       fontFamily: 'Inter-Medium',
       fontWeight: '500',
       color: themeColors?.secondaryText || '#969696',
-      marginBottom: 10,
+      marginBottom: verticalScale(10),
     },
     showDescription: {
-      fontSize: 14,
+      fontSize: fontSize.smallVariant,
       color: themeColors?.text || '#ddd',
       fontFamily: 'Inter-Regular',
-      marginBottom: 10,
+      marginBottom: verticalScale(10),
     },
     showAdditionalInfo: {
-      fontSize: 14,
+      fontSize: fontSize.smallVariant,
       color: themeColors?.secondaryText || '#aaa',
       fontFamily: 'Inter-Medium',
-      marginBottom: 5,
+      marginBottom: verticalScale(5),
     },
     boldText: {
       fontWeight: 'bold',

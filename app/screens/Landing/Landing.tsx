@@ -4,6 +4,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Image, View } from 'react-native';
 import styles from './LandingStyles';
+import { AppConstants } from 'constant';
 
 const Landing = () => {
   const { navigation } = useNavigation();
@@ -22,7 +23,7 @@ const Landing = () => {
       <Image
         style={styles.bannerIcon}
         resizeMode="cover"
-        source={require('assets/landing.png')}
+        source={{ uri: AppConstants.LANDING_IMAGE }}
       />
       <View style={styles.buttonContainer}>
         <Button

@@ -1,6 +1,7 @@
 export const AppConstants = {
   BASE_IMAGE_PATH: 'https://image.tmdb.org/t/p/w500',
-  LANDING_IMAGE: require('assets/landing.png'),
+  LANDING_IMAGE:
+    'https://image.tmdb.org/t/p/w500/kOVEVeg59E0wsnXmF9nrh6OmWII.jpg',
 };
 
 export const AppIcons = {

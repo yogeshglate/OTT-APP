@@ -60,7 +60,9 @@ const Home: React.FC = () => {
         showsHorizontalScrollIndicator={false}
         onEndReachedThreshold={0.5}
         onEndReached={() => {
-          if (hasMore) {loadMore();}
+          if (hasMore) {
+            loadMore();
+          }
         }}
         ListFooterComponent={
           loading && hasMore ? (
@@ -78,7 +80,10 @@ const Home: React.FC = () => {
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <View style={styles.header}>
-        <Image source={AppConstants.LANDING_IMAGE} style={styles.headerImage} />
+        <Image
+          source={{ uri: AppConstants.LANDING_IMAGE }}
+          style={styles.headerImage}
+        />
       </View>
       {categories.map(({ title, moviesHook }) =>
         renderCategory(title, moviesHook),

@@ -1,4 +1,5 @@
 import { Dimensions, StyleSheet } from 'react-native';
+import { fontSize, moderateScale, scale, verticalScale } from 'services';
 import { ThemeColors } from 'types';
 
 const { height } = Dimensions.get('window');
@@ -10,7 +11,7 @@ const getStyles = (themeColors?: ThemeColors) =>
       backgroundColor: themeColors?.inputBackground,
     },
     header: {
-      marginBottom: 10,
+      marginBottom: verticalScale(10),
     },
     headerImage: {
       width: '100%',
@@ -18,25 +19,25 @@ const getStyles = (themeColors?: ThemeColors) =>
       resizeMode: 'cover',
     },
     section: {
-      marginVertical: 10,
+      marginVertical: verticalScale(10),
     },
     sectionTitle: {
-      fontSize: 20,
+      fontSize: fontSize.large,
       fontWeight: 'bold',
-      marginLeft: 15,
-      marginBottom: 10,
+      marginLeft: scale(15),
+      marginBottom: verticalScale(10),
       color: themeColors?.text,
     },
     card: {
-      marginLeft: 10,
+      marginLeft: scale(10),
     },
     image: {
-      width: 120,
-      height: 180,
-      borderRadius: 10,
+      width: scale(120),
+      height: verticalScale(180),
+      borderRadius: moderateScale(10),
     },
     loadingIndicator: {
-      padding: 16,
+      padding: moderateScale(16),
     },
   });
 
