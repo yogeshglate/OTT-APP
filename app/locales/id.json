@@ -40,5 +40,12 @@
   "SEARCH": "Cari",
   "FAVORITE": "Favorit",
   "SETTINGS": "Pengaturan",
-  "LANGUAGE_SELECTION_TEXT": "Pilih Bahasa"
+  "LANGUAGE_SELECTION_TEXT": "Pilih Bahasa",
+  "ERROR": "Kesalahan",
+  "SUCCESS": "Sukses",
+  "USER_LOGGED_OUT_SUCCESS": "Pengguna berhasil keluar",
+  "LOGOUT_ERROR": "Kesalahan saat keluar",
+  "LOGIN_SUCCESS_MESSAGE": "Pengguna berhasil masuk",
+  "FAVORITE_ADDED_MESSAGE": "Ditambahkan ke Favorit",
+  "FAVORITE_REMOVED_MESSAGE": "Dihapus dari Favorit"
 }

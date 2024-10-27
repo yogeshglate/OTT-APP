@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { Pressable, Text, View } from 'react-native';
 import { Menu, Provider } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { showError } from 'services';
 import getStyles from './SettingsStyles';
 
 const Settings: React.FC = () => {
@@ -21,10 +22,10 @@ const Settings: React.FC = () => {
   const handleLogout = async () => {
     try {
       await logout();
-      console.warn('User Logged Out Successfully');
+      showError(t('USER_LOGGED_OUT_SUCCESS'));
       navigation.navigate('Landing');
     } catch {
-      console.error('Error in logging out');
+      showError(t('LOGOUT_ERROR'));
     }
   };
 

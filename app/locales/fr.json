@@ -40,5 +40,12 @@
   "SEARCH": "Recherche",
   "FAVORITE": "Favori",
   "SETTINGS": "Paramètres",
-  "LANGUAGE_SELECTION_TEXT": "Sélectionnez la langue"
+  "LANGUAGE_SELECTION_TEXT": "Sélectionnez la langue",
+  "ERROR": "Erreur",
+  "SUCCESS": "Succès",
+  "USER_LOGGED_OUT_SUCCESS": "Utilisateur déconnecté avec succès",
+  "LOGOUT_ERROR": "Erreur lors de la déconnexion",
+  "LOGIN_SUCCESS_MESSAGE": "Utilisateur connecté avec succès",
+  "FAVORITE_ADDED_MESSAGE": "Ajouté aux Favoris",
+  "FAVORITE_REMOVED_MESSAGE": "Retiré des Favoris"
 }

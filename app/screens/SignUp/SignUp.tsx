@@ -7,6 +7,7 @@ import React, { useCallback, useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Keyboard, Pressable, Text, View } from 'react-native';
 import { TextInput } from 'react-native-paper';
+import { showError, showSuccess } from 'services';
 import getStyles from './SignUpStyles';
 
 const SignUp: React.FC = () => {
@@ -64,9 +65,9 @@ const SignUp: React.FC = () => {
       try {
         await register({ email, username, password });
         navigation.navigate('Login');
-        console.warn(t('SIGNUP_SUCCESS'));
+        showSuccess(t('SIGNUP_SUCCESS'));
       } catch (error) {
-        console.error(t('REGISTRATION_FAILED_ERROR'));
+        showError(t('REGISTRATION_FAILED_ERROR'));
       }
     }
   };

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import Config from 'react-native-config';
+import { showError } from 'services';
 import { Movie } from 'types';
 
 export const useFetchMovies = (category: string) => {
@@ -29,7 +30,7 @@ export const useFetchMovies = (category: string) => {
 
         setHasMore(response.data.page < response.data.total_pages);
       } catch (error) {
-        console.error(`Error fetching ${category} movies:`, error);
+        showError(`Error fetching ${category} movies: ${error}`);
       } finally {
         setLoading(false);
       }

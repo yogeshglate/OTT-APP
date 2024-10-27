@@ -1,11 +1,12 @@
-import 'intl-pluralrules';
 import { NavigationContainer } from '@react-navigation/native';
 import { NoInternet } from 'components';
 import { colors } from 'constant';
 import { useAuth, useDarkMode, useNetworkStatus } from 'hooks';
+import 'intl-pluralrules';
 import { AuthNavigator } from 'navigation';
 import React, { createContext } from 'react';
 import { I18nextProvider } from 'react-i18next';
+import Toast from 'react-native-toast-message';
 import { i18n } from 'services';
 import { ThemeContextType } from 'types';
 
@@ -25,6 +26,7 @@ const AppContent = () => {
         <ThemeContext.Provider
           value={{ isDarkMode, themeColors, toggleTheme, user }}>
           {isConnected ? <AuthNavigator /> : <NoInternet />}
+          <Toast />
         </ThemeContext.Provider>
       </NavigationContainer>
     </I18nextProvider>

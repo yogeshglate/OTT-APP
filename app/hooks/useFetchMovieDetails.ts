@@ -1,13 +1,14 @@
 import axios from 'axios';
-import { AppConstants } from 'constant';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import Config from 'react-native-config';
+import { showError } from 'services';
 import { MovieDetail } from 'types';
 
 export const useFetchMovieDetails = (id: string) => {
   const [movieDetails, setMovieDetails] = useState<MovieDetail | null>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchMovieDetails = async () => {
@@ -18,8 +19,7 @@ export const useFetchMovieDetails = (id: string) => {
         });
         setMovieDetails(response.data);
       } catch (error) {
-        setError(AppConstants.MOVIE_DETAILS_FETCH_ERROR);
-        console.error(error);
+        showError(`${t('MOVIE_DETAILS_FETCH_ERROR')}`);
       } finally {
         setLoading(false);
       }
@@ -28,5 +28,5 @@ export const useFetchMovieDetails = (id: string) => {
     fetchMovieDetails();
   }, [id]);
 
-  return { movieDetails, loading, error };
+  return { movieDetails, loading };
 };

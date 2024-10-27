@@ -40,5 +40,12 @@
   "SEARCH": "Search",
   "FAVORITE": "Favorite",
   "SETTINGS": "Settings",
-  "LANGUAGE_SELECTION_TEXT": "Select Language"
+  "LANGUAGE_SELECTION_TEXT": "Select Language",
+  "ERROR": "Error",
+  "SUCCESS": "Success",
+  "USER_LOGGED_OUT_SUCCESS": "User Logged Out Successfully",
+  "LOGOUT_ERROR": "Error in logging out",
+  "LOGIN_SUCCESS_MESSAGE": "User Logged In Successfully",
+  "FAVORITE_ADDED_MESSAGE": "Added To Favourites",
+  "FAVORITE_REMOVED_MESSAGE": "Removed From Favourites"
 }

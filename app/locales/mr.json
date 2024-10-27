@@ -40,5 +40,12 @@
   "SEARCH": "शोधा",
   "FAVORITE": "आवडता",
   "SETTINGS": "सेटिंग्ज",
-  "LANGUAGE_SELECTION_TEXT": "भाषा निवडा"
+  "LANGUAGE_SELECTION_TEXT": "भाषा निवडा",
+  "ERROR": "त्रुटी",
+  "SUCCESS": "सफलता",
+  "USER_LOGGED_OUT_SUCCESS": "वापरकर्ता यशस्वीरित्या साइन आऊट झाला",
+  "LOGOUT_ERROR": "साइन आऊट करण्यात चूक",
+  "LOGIN_SUCCESS_MESSAGE": "वापरकर्ता यशस्वीरित्या साइन इन झाला",
+  "FAVORITE_ADDED_MESSAGE": "आवडत्या मध्ये जोडले",
+  "FAVORITE_REMOVED_MESSAGE": "आवडत्या मधून काढले"
 }

@@ -1,9 +1,9 @@
 import { Button } from 'components';
 import { useNavigation } from 'hooks';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Image, View } from 'react-native';
 import styles from './LandingStyles';
-import { useTranslation } from 'react-i18next';
 
 const Landing = () => {
   const { navigation } = useNavigation();

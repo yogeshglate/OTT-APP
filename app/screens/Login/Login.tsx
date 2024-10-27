@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { Keyboard, Pressable, Text, View } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import getStyles from './LoginStyles';
+import { showError, showSuccess } from 'services';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -57,8 +58,9 @@ const Login = () => {
       const isLoggedIn = await login(email, password);
       if (isLoggedIn) {
         navigation.navigate('HomeTab');
+        showSuccess(t('LOGIN_SUCCESS_MESSAGE'));
       } else {
-        console.error(t('LOGIN_FAILURE_MESSAGE'));
+        showError(t('LOGIN_FAILURE_MESSAGE'));
       }
     }
   };

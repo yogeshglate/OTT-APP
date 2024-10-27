@@ -40,5 +40,12 @@
   "SEARCH": "खोजें",
   "FAVORITE": "पसंदीदा",
   "SETTINGS": "सेटिंग्स",
-  "LANGUAGE_SELECTION_TEXT": "भाषा चुनें"
+  "LANGUAGE_SELECTION_TEXT": "भाषा चुनें",
+  "ERROR": "त्रुटी",
+  "SUCCESS": "सफलता",
+  "USER_LOGGED_OUT_SUCCESS": "उपयोगकर्ता सफलतापूर्वक लॉगआउट हुआ",
+  "LOGOUT_ERROR": "लॉगआउट में त्रुटि",
+  "LOGIN_SUCCESS_MESSAGE": "उपयोगकर्ता सफलतापूर्वक लॉग इन हुआ",
+  "FAVORITE_ADDED_MESSAGE": "पसंदीदा में जोड़ा गया",
+  "FAVORITE_REMOVED_MESSAGE": "पसंदीदा से हटा दिया गया"
 }

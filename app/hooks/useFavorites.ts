@@ -1,11 +1,14 @@
-import { useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Movie, MovieDetail } from 'types';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { showError, showSuccess } from 'services';
+import { MovieDetail } from 'types';
 
 const FAVORITES_KEY = '@favorites';
 
 export const useFavorites = () => {
   const [favorites, setFavorites] = useState<MovieDetail[]>([]);
+  const { t } = useTranslation();
 
   const getFavorites = async () => {
     try {
@@ -14,7 +17,7 @@ export const useFavorites = () => {
         setFavorites(JSON.parse(storedFavorites));
       }
     } catch (error) {
-      console.error('Failed to load favorites', error);
+      showError(`Failed to load favorites ${error}`);
     }
   };
   useEffect(() => {
@@ -23,6 +26,7 @@ export const useFavorites = () => {
 
   const addFavorite = async (movie: MovieDetail) => {
     const updatedFavorites = [...favorites, movie];
+    showSuccess(t('FAVORITE_ADDED_MESSAGE'));
     setFavorites(updatedFavorites);
     await AsyncStorage.setItem(FAVORITES_KEY, JSON.stringify(updatedFavorites));
   };
@@ -32,6 +36,7 @@ export const useFavorites = () => {
       (movie: MovieDetail) => movie.id !== movieId,
     );
     setFavorites(updatedFavorites);
+    showError(t('FAVORITE_REMOVED_MESSAGE'));
     await AsyncStorage.setItem(FAVORITES_KEY, JSON.stringify(updatedFavorites));
   };
 

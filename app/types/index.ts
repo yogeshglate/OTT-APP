@@ -66,4 +66,9 @@ export type Category = {
   };
 };
 
+export type ToastOptions = {
+  visibilityTime?: number;
+  swipeable?: boolean;
+};
+
 export type ThemeColors = typeof colors.light;
