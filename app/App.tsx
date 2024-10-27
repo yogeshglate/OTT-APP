@@ -1,9 +1,12 @@
+import 'intl-pluralrules';
 import { NavigationContainer } from '@react-navigation/native';
 import { NoInternet } from 'components';
+import { colors } from 'constant';
 import { useAuth, useDarkMode, useNetworkStatus } from 'hooks';
 import { AuthNavigator } from 'navigation';
 import React, { createContext } from 'react';
-import { colors } from 'styles';
+import { I18nextProvider } from 'react-i18next';
+import { i18n } from 'services';
 import { ThemeContextType } from 'types';
 
 export const ThemeContext = createContext<ThemeContextType>(null);
@@ -17,12 +20,14 @@ const AppContent = () => {
   const isConnected = useNetworkStatus();
 
   return (
-    <NavigationContainer>
-      <ThemeContext.Provider
-        value={{ isDarkMode, themeColors, toggleTheme, user }}>
-        {isConnected ? <AuthNavigator /> : <NoInternet />}
-      </ThemeContext.Provider>
-    </NavigationContainer>
+    <I18nextProvider i18n={i18n}>
+      <NavigationContainer>
+        <ThemeContext.Provider
+          value={{ isDarkMode, themeColors, toggleTheme, user }}>
+          {isConnected ? <AuthNavigator /> : <NoInternet />}
+        </ThemeContext.Provider>
+      </NavigationContainer>
+    </I18nextProvider>
   );
 };
 

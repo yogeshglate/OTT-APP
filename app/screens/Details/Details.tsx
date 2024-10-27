@@ -3,6 +3,7 @@ import { Loader } from 'components';
 import { AppConstants, AppIcons } from 'constant';
 import { useFavorites, useFetchMovieDetails, useNavigation } from 'hooks';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Image, Pressable, ScrollView, Text, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { MovieDetail } from 'types';
@@ -12,6 +13,7 @@ const Details = () => {
   const { themeColors } = React.useContext(ThemeContext) || {};
   const styles = getStyles(themeColors);
   const { navigation, route } = useNavigation();
+  const { t } = useTranslation();
   const movieId = route.params?.id || '';
 
   const { movieDetails, loading } = useFetchMovieDetails(movieId);
@@ -36,7 +38,7 @@ const Details = () => {
           <Icon name="arrow-left" size={24} color={themeColors?.text} />
         </Pressable>
         <Text style={styles.title}>
-          {movieDetails ? movieDetails.title : AppConstants.LOADING_TEXT}
+          {movieDetails ? movieDetails.title : t('LOADING_TEXT')}
         </Text>
         <Pressable onPress={handleToggleFavorite}>
           <Icon
@@ -69,17 +71,17 @@ const Details = () => {
             </Text>
             <Text style={styles.showDescription}>{movieDetails?.overview}</Text>
             <Text style={styles.showAdditionalInfo}>
-              <Text style={styles.boldText}>{AppConstants.GENRES_LABEL}</Text>
+              <Text style={styles.boldText}>{t('CREATORS_LABEL')}</Text>
               {movieDetails?.production_companies
                 ?.map(creator => creator.name)
                 .join(', ')}
             </Text>
             <Text style={styles.showAdditionalInfo}>
-              <Text style={styles.boldText}>{AppConstants.GENRES_LABEL}</Text>
+              <Text style={styles.boldText}>{t('GENRES_LABEL')}</Text>
               {movieDetails?.genres?.map(genre => genre.name).join(', ')}
             </Text>
             <Text style={styles.showAdditionalInfo}>
-              <Text style={styles.boldText}>{AppConstants.RATING_LABEL}</Text>
+              <Text style={styles.boldText}>{t('RATING_LABEL')}</Text>
               {movieDetails?.vote_average} / 10
             </Text>
           </View>

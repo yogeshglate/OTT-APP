@@ -2,6 +2,7 @@ import { ThemeContext } from 'app';
 import { AppConstants, AppIcons } from 'constant';
 import { useFavorites, useNavigation } from 'hooks';
 import React, { useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { FlatList, Image, Pressable, Text, View } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { MovieDetail } from 'types';
@@ -12,6 +13,7 @@ const Favorites: React.FC = () => {
   const styles = getStyles(themeColors);
   const { getFavorites, favorites } = useFavorites();
   const { navigation, useFocusEffect } = useNavigation();
+  const { t } = useTranslation();
 
   useFocusEffect(
     useCallback(() => {
@@ -47,7 +49,7 @@ const Favorites: React.FC = () => {
         <View style={styles.badgeWrapper}>
           <View style={styles.badge}>
             <Text style={styles.badgeText}>
-              {AppConstants.FAVORITES_DOWNLOAD_BADGE}
+              {t('FAVORITES_DOWNLOAD_BADGE')}
             </Text>
           </View>
         </View>
@@ -57,11 +59,9 @@ const Favorites: React.FC = () => {
 
   const renderEmptyListMessage = () => (
     <View style={styles.emptyListContainer}>
-      <Text style={styles.emptyListText}>
-        {AppConstants.NO_FAVORITES_MESSAGE}
-      </Text>
+      <Text style={styles.emptyListText}>{t('NO_FAVORITES_MESSAGE')}</Text>
       <Text style={styles.emptyListSubText}>
-        {AppConstants.NO_FAVORITES_SUB_MESSAGE}
+        {t('NO_FAVORITES_SUB_MESSAGE')}
       </Text>
     </View>
   );
@@ -69,7 +69,7 @@ const Favorites: React.FC = () => {
   return (
     <View style={styles.container}>
       <View style={styles.appBar}>
-        <Text style={styles.title}>{AppConstants.FAVORITES_TITLE}</Text>
+        <Text style={styles.title}>{t('FAVORITES_TITLE')}</Text>
       </View>
       <FlatList
         data={favorites}

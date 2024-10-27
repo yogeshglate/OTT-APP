@@ -1,5 +1,5 @@
 import { GestureResponderEvent } from 'react-native';
-import { colors } from 'styles';
+import { colors } from 'constant';
 
 export interface ButtonProps {
   text: string;

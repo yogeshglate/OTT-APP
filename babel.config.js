@@ -23,6 +23,7 @@ module.exports = {
           utils: './app/utils/index.ts',
           constant: './app/constants/index.ts',
           app: './app/App.tsx',
+          locales: './app/locales',
         },
       },
     ],

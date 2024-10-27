@@ -16,7 +16,8 @@
       "types/*": ["./app/types/index"],
       "utils": ["utils/index"],
       "constant": ["constants/index"],
-      "app": ["App"]
+      "app": ["App"],
+      "locales": ["./app/locales"]
     }
   },
   "include": ["app/**/*"], // Include app folder and subfolders

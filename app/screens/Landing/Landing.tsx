@@ -3,9 +3,11 @@ import { useNavigation } from 'hooks';
 import React from 'react';
 import { Image, View } from 'react-native';
 import styles from './LandingStyles';
+import { useTranslation } from 'react-i18next';
 
 const Landing = () => {
   const { navigation } = useNavigation();
+  const { t } = useTranslation();
 
   const navigateToLogin = () => {
     navigation.navigate('Login');
@@ -23,8 +25,16 @@ const Landing = () => {
         source={require('assets/landing.png')}
       />
       <View style={styles.buttonContainer}>
-        <Button text="Login" onPress={navigateToLogin} type="contained" />
-        <Button text="Sign Up" onPress={navigateToSignUp} type="outlined" />
+        <Button
+          text={t('LOGIN_TITLE')}
+          onPress={navigateToLogin}
+          type="contained"
+        />
+        <Button
+          text={t('SIGNUP_LINK_TEXT')}
+          onPress={navigateToSignUp}
+          type="outlined"
+        />
       </View>
     </View>
   );

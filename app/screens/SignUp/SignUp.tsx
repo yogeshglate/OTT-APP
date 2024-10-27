@@ -1,9 +1,10 @@
 import { useFocusEffect } from '@react-navigation/native';
 import { ThemeContext } from 'app';
 import { Button } from 'components';
-import { AppConstants, AppIcons } from 'constant';
+import { AppIcons } from 'constant';
 import { useAuth, useNavigation } from 'hooks';
 import React, { useCallback, useContext, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Keyboard, Pressable, Text, View } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import getStyles from './SignUpStyles';
@@ -22,6 +23,7 @@ const SignUp: React.FC = () => {
   const { register } = useAuth();
   const { themeColors } = useContext(ThemeContext) || {};
   const styles = getStyles(themeColors);
+  const { t } = useTranslation();
 
   const handleSignInPress = () => {
     navigation.navigate('Login');
@@ -38,23 +40,23 @@ const SignUp: React.FC = () => {
     let isValid = true;
 
     if (!email) {
-      setEmailError(AppConstants.EMAIL_REQUIRED_ERROR);
+      setEmailError(t('EMAIL_REQUIRED_ERROR'));
       isValid = false;
     } else if (!validateEmail(email)) {
-      setEmailError(AppConstants.EMAIL_INVALID_ERROR);
+      setEmailError(t('EMAIL_INVALID_ERROR'));
       isValid = false;
     }
 
     if (!username) {
-      setUsernameError(AppConstants.USERNAME_REQUIRED_ERROR);
+      setUsernameError(t('USERNAME_REQUIRED_ERROR'));
       isValid = false;
     }
 
     if (!password) {
-      setPasswordError(AppConstants.PASSWORD_REQUIRED_ERROR);
+      setPasswordError(t('PASSWORD_REQUIRED_ERROR'));
       isValid = false;
     } else if (password.length < 6) {
-      setPasswordError(AppConstants.PASSWORD_LENGTH_ERROR);
+      setPasswordError(t('PASSWORD_LENGTH_ERROR'));
       isValid = false;
     }
 
@@ -62,9 +64,9 @@ const SignUp: React.FC = () => {
       try {
         await register({ email, username, password });
         navigation.navigate('Login');
-        console.warn(AppConstants.SIGNUP_SUCCESS);
+        console.warn(t('SIGNUP_SUCCESS'));
       } catch (error) {
-        console.error(AppConstants.REGISTRATION_FAILED_ERROR);
+        console.error(t('REGISTRATION_FAILED_ERROR'));
       }
     }
   };
@@ -82,12 +84,12 @@ const SignUp: React.FC = () => {
 
   return (
     <Pressable style={styles.signup} onPress={Keyboard.dismiss}>
-      <Text style={styles.signupTitle}>{AppConstants.SIGNUP_LINK_TEXT}</Text>
+      <Text style={styles.signupTitle}>{t('SIGNUP_LINK_TEXT')}</Text>
 
       <View style={styles.inputContainer}>
         <TextInput
           mode="outlined"
-          label={AppConstants.EMAIL_LABEL}
+          label={t('EMAIL_LABEL')}
           value={email}
           onChangeText={text => {
             setEmail(text);
@@ -118,7 +120,7 @@ const SignUp: React.FC = () => {
       <View style={styles.inputContainer}>
         <TextInput
           mode="outlined"
-          label={AppConstants.USERNAME_LABEL}
+          label={t('USERNAME_LABEL')}
           value={username}
           onChangeText={text => {
             setUsername(text);
@@ -189,15 +191,15 @@ const SignUp: React.FC = () => {
       </View>
 
       <Button
-        text={AppConstants.SIGNUP_LINK_TEXT}
+        text={t('SIGNUP_LINK_TEXT')}
         onPress={handleSignUp}
         type="contained"
       />
 
       <View style={styles.loginContainer}>
-        <Text style={styles.loginText}>{AppConstants.LOGIN_PROMPT}</Text>
+        <Text style={styles.loginText}>{t('LOGIN_PROMPT')}</Text>
         <Pressable onPress={handleSignInPress}>
-          <Text style={styles.loginLink}>{AppConstants.LOGIN_TITLE}</Text>
+          <Text style={styles.loginLink}>{t('LOGIN_TITLE')}</Text>
         </Pressable>
       </View>
     </Pressable>

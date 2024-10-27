@@ -2,6 +2,7 @@ import { ThemeContext } from 'app';
 import { AppConstants, AppIcons } from 'constant';
 import { useFetchMovies, useNavigation } from 'hooks';
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   ActivityIndicator,
   FlatList,
@@ -19,6 +20,7 @@ const Search: React.FC = () => {
   const styles = getStyles(themeColors);
   const { navigation } = useNavigation();
   const [searchQuery, setSearchQuery] = useState('');
+  const { t } = useTranslation();
 
   const {
     movies: popularMovies,
@@ -75,13 +77,13 @@ const Search: React.FC = () => {
   return (
     <View style={styles.container}>
       <View style={styles.appBar}>
-        <Text style={styles.title}>{AppConstants.SEARCH_TITLE}</Text>
+        <Text style={styles.title}>{t('SEARCH_TITLE')}</Text>
       </View>
 
       <View style={styles.searchBarContainer}>
         <TextInput
           style={styles.searchBar}
-          placeholder={AppConstants.SEARCH_PLACEHOLDER}
+          placeholder={t('SEARCH_PLACEHOLDER')}
           placeholderTextColor={themeColors?.primary}
           value={searchQuery}
           onChangeText={setSearchQuery}

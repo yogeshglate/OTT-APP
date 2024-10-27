@@ -1,13 +1,15 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { ThemeContext } from 'app';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Favorites, Home, Search, Settings } from 'screens';
 
 const Tab = createBottomTabNavigator();
 
 export const TabNavigator = () => {
-  const { themeColors, isDarkMode } = React.useContext(ThemeContext) || {};
+  const { themeColors } = React.useContext(ThemeContext) || {};
+  const { t } = useTranslation();
 
   const TabIcon = ({
     iconName,
@@ -37,6 +39,7 @@ export const TabNavigator = () => {
           tabBarIcon: ({ color, size }) => (
             <TabIcon iconName="home" color={color} size={size} />
           ),
+          tabBarLabel: t('HOME'),
         }}
       />
       <Tab.Screen
@@ -46,6 +49,7 @@ export const TabNavigator = () => {
           tabBarIcon: ({ color, size }) => (
             <TabIcon iconName="magnify" color={color} size={size} />
           ),
+          tabBarLabel: t('SEARCH'),
         }}
       />
       <Tab.Screen
@@ -55,6 +59,7 @@ export const TabNavigator = () => {
           tabBarIcon: ({ color, size }) => (
             <TabIcon iconName="heart" color={color} size={size} />
           ),
+          tabBarLabel: t('FAVORITE'),
         }}
       />
       <Tab.Screen
@@ -64,6 +69,7 @@ export const TabNavigator = () => {
           tabBarIcon: ({ color, size }) => (
             <TabIcon iconName="cog" color={color} size={size} />
           ),
+          tabBarLabel: t('SETTINGS'),
         }}
       />
     </Tab.Navigator>

@@ -1,8 +1,9 @@
 import { ThemeContext } from 'app';
 import { Button } from 'components';
-import { AppConstants, AppIcons } from 'constant'; // Import AppConstants
+import { AppIcons } from 'constant'; // Import AppConstants
 import { useAuth, useNavigation } from 'hooks';
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Keyboard, Pressable, Text, View } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import getStyles from './LoginStyles';
@@ -19,6 +20,7 @@ const Login = () => {
   const { themeColors } = React.useContext(ThemeContext) || {};
   const styles = getStyles(themeColors);
   const { login } = useAuth();
+  const { t } = useTranslation();
 
   const handleSignUpPress = () => {
     navigation.navigate('SignUp');
@@ -36,18 +38,18 @@ const Login = () => {
     let isValid = true;
 
     if (!email) {
-      setEmailError(AppConstants.EMAIL_REQUIRED_ERROR);
+      setEmailError(t('EMAIL_REQUIRED_ERROR'));
       isValid = false;
     } else if (!validateEmail(email)) {
-      setEmailError(AppConstants.EMAIL_INVALID_ERROR);
+      setEmailError(t('EMAIL_INVALID_ERROR'));
       isValid = false;
     }
 
     if (!password) {
-      setPasswordError(AppConstants.PASSWORD_REQUIRED_ERROR);
+      setPasswordError(t('PASSWORD_REQUIRED_ERROR'));
       isValid = false;
     } else if (password.length < 6) {
-      setPasswordError(AppConstants.PASSWORD_LENGTH_ERROR);
+      setPasswordError(t('PASSWORD_LENGTH_ERROR'));
       isValid = false;
     }
 
@@ -56,7 +58,7 @@ const Login = () => {
       if (isLoggedIn) {
         navigation.navigate('HomeTab');
       } else {
-        console.error(AppConstants.LOGIN_FAILURE_MESSAGE);
+        console.error(t('LOGIN_FAILURE_MESSAGE'));
       }
     }
   };
@@ -73,13 +75,13 @@ const Login = () => {
   return (
     <Pressable style={styles.login} onPress={Keyboard.dismiss}>
       <Text style={[styles.loginTitle, { color: themeColors?.text }]}>
-        {AppConstants.LOGIN_TITLE}
+        {t('LOGIN_TITLE')}
       </Text>
 
       <View style={styles.inputContainer}>
         <TextInput
           mode="outlined"
-          label={AppConstants.EMAIL_LABEL}
+          label={t('EMAIL_LABEL')}
           value={email}
           onChangeText={text => {
             setEmail(text);
@@ -111,7 +113,7 @@ const Login = () => {
       <View style={styles.inputContainer}>
         <TextInput
           mode="outlined"
-          label={AppConstants.PASSWORD_LABEL}
+          label={t('PASSWORD_LABEL')}
           value={password}
           onChangeText={text => {
             setPassword(text);
@@ -156,15 +158,15 @@ const Login = () => {
       </View>
 
       <Button
-        text={AppConstants.LOGIN_TITLE}
+        text={t('LOGIN_TITLE')}
         onPress={handleLoginPress}
         type="contained"
       />
 
       <View style={styles.signupContainer}>
-        <Text style={styles.signupText}>{AppConstants.SIGNUP_PROMPT}</Text>
+        <Text style={styles.signupText}>{t('SIGNUP_PROMPT')}</Text>
         <Pressable onPress={handleSignUpPress}>
-          <Text style={styles.signupLink}>{AppConstants.SIGNUP_LINK_TEXT}</Text>
+          <Text style={styles.signupLink}>{t('SIGNUP_LINK_TEXT')}</Text>
         </Pressable>
       </View>
     </Pressable>

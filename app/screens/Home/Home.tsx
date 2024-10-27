@@ -1,7 +1,8 @@
 import { ThemeContext } from 'app';
-import { AppConstants, CategoryTitles } from 'constant';
+import { AppConstants } from 'constant';
 import { useFetchMovies, useNavigation } from 'hooks';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   ActivityIndicator,
   FlatList,
@@ -18,15 +19,16 @@ const Home: React.FC = () => {
   const { navigation } = useNavigation();
   const { themeColors } = React.useContext(ThemeContext) || {};
   const styles = getStyles(themeColors);
+  const { t } = useTranslation();
 
   const categories: Category[] = [
-    { title: CategoryTitles.popular, moviesHook: useFetchMovies('popular') },
+    { title: t('POPULAR'), moviesHook: useFetchMovies('popular') },
     {
-      title: CategoryTitles.nowPlaying,
+      title: t('NOW_PLAYING'),
       moviesHook: useFetchMovies('now_playing'),
     },
-    { title: CategoryTitles.upcoming, moviesHook: useFetchMovies('upcoming') },
-    { title: CategoryTitles.topRated, moviesHook: useFetchMovies('top_rated') },
+    { title: t('UPCOMING'), moviesHook: useFetchMovies('upcoming') },
+    { title: t('TOP_RATED'), moviesHook: useFetchMovies('top_rated') },
   ];
 
   const handleNavigateToDetails = (movieId: number) => {
