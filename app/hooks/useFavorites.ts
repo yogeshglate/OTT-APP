@@ -36,7 +36,7 @@ export const useFavorites = () => {
       (movie: MovieDetail) => movie.id !== movieId,
     );
     setFavorites(updatedFavorites);
-    showError(t('FAVORITE_REMOVED_MESSAGE'));
+    showSuccess(t('FAVORITE_REMOVED_MESSAGE'));
     await AsyncStorage.setItem(FAVORITES_KEY, JSON.stringify(updatedFavorites));
   };
 

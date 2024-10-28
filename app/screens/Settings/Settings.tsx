@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { Pressable, Text, View } from 'react-native';
 import { Menu, Provider } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { showError, showSuccess } from 'services';
+import { showSuccess } from 'services';
 import getStyles from './SettingsStyles';
 
 const Settings: React.FC = () => {
@@ -37,7 +37,7 @@ const Settings: React.FC = () => {
       showSuccess(t('USER_LOGGED_OUT_SUCCESS'));
       navigation.replace('Landing');
     } catch {
-      showError(t('LOGOUT_ERROR'));
+      showSuccess(t('LOGOUT_ERROR'));
     }
   };
 
